@@ -1,10 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"time"
 
-	hello "github.com/blatt-4-klausklausklaus/movies/proto/hello"
+	hello "github.com/ob-vss-ws19/blatt-4-klausklausklaus/movies/proto/hello"
 
 	"github.com/micro/go-micro"
 
@@ -31,6 +32,7 @@ func main() {
 
 	// Register Handlers
 	hello.RegisterSayHandler(service.Server(), new(Say))
+	fmt.Println("ssssss")
 
 	// Run server
 	if err := service.Run(); err != nil {
