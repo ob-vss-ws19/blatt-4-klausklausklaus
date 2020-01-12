@@ -15,20 +15,11 @@ const (
 	maxuserid int32 = 987654321
 )
 
-/*
-containsID will check whether generated ID is already set or not.
-@id will be a int32 id to check for.
-*/
 func (u *UserHandlerService) containsID(id int32) bool {
 	_, inMap := (*u.getUserMap())[id]
 	return inMap
 }
 
-/*
-Function to produce a random userID.
-@param length will be the length of the number.
-@param seed will be a seed in order to produce "really" random numbers.
-*/
 func (u *UserHandlerService) getRandomUserID(length int32) int32 {
 	rand.Seed(time.Now().UnixNano())
 	for {
@@ -39,9 +30,7 @@ func (u *UserHandlerService) getRandomUserID(length int32) int32 {
 	}
 }
 
-/*
-getUserMap will return a pointer to the current user map in order to work in that.
-*/
+// getUserMap will return a pointer to the current user map in order to work in that. //
 func (u *UserHandlerService) getUserMap() *map[int32]*userS {
 	return &u.user
 }
@@ -58,9 +47,6 @@ type userS struct {
 	name string
 }
 
-/*
-getName will return the name of a given userS-instance.
-*/
 func (us *userS) getName() string {
 	return us.name
 }
@@ -72,18 +58,12 @@ type Dependencies struct {
 	ResService func() resproto.ReservationService
 }
 
-/*
-UserHandlerService will be the representation of our service.
-*/
 type UserHandlerService struct {
 	user         map[int32]*userS
 	dependencies *Dependencies
 	mutex        *sync.Mutex
 }
 
-/*
-CreateNewUserHandleInstance will create a new service for the user management.
-*/
 func CreateNewUserHandleInstance() *UserHandlerService {
 	return &UserHandlerService{
 		user:  make(map[int32]*userS),
@@ -91,16 +71,10 @@ func CreateNewUserHandleInstance() *UserHandlerService {
 	}
 }
 
-/*
-AddDependency will add a dependency into the service.
-*/
 func (u *UserHandlerService) AddDependency(dep *Dependencies) {
 	u.dependencies = dep
 }
 
-/*
-appendANewUser will add a new user in the datastructure.
-*/
 func (u *UserHandlerService) appendANewUser(id int32, user *userS) bool {
 	if id != 0 && user != nil {
 		(*u.getUserMap())[id] = user
@@ -109,10 +83,6 @@ func (u *UserHandlerService) appendANewUser(id int32, user *userS) bool {
 	return false
 }
 
-/*
-CreateUser will create a user and append it into the structures. After that this method will
-return a response.
-*/
 func (u *UserHandlerService) CreateUser(context context.Context, request *proto.CreateUserRequest, response *proto.CreatedUserResponse) error {
 	if request.GetName() != "" {
 		uid := u.getRandomUserID(maxuserid)
@@ -184,9 +154,9 @@ func (u *UserHandlerService) GetInformationFromMap(value interface{}) interface{
 }
 
 /*
-FindUser will find a user in the datastructure. (For finding a user by his Name see FindUserByName).
+FindUserByID will find a user in the datastructure. (For finding a user by his Name see FindUserByName).
 */
-func (u *UserHandlerService) FindUser(context context.Context, in *proto.FindUserRequest, out *proto.FindUserResponse) error {
+func (u *UserHandlerService) FindUserByID(context context.Context, in *proto.FindUserRequest, out *proto.FindUserResponse) error {
 	if u.containsID(in.GetUser().GetUserid()) {
 		name := u.GetInformationFromMap(in.GetUser().GetUserid()).(string)
 		if name != "" {
@@ -199,7 +169,7 @@ func (u *UserHandlerService) FindUser(context context.Context, in *proto.FindUse
 }
 
 /*
-FindUserByName will find a user by his Name and not by his ID. (For finding a user by his ID see FindUser).
+FindUserByName will find a user by his Name and not by his ID. (For finding a user by his ID see FindUserByID).
 */
 func (u *UserHandlerService) FindUserByName(context context.Context, in *proto.FindUserByNameRequest, out *proto.FindUserResponse) error {
 	if in.User.GetName() != "" {
@@ -227,9 +197,6 @@ func (u *UserHandlerService) change(id int32, pname string) bool {
 	return false
 }
 
-/*
-ChangeUser will change a user in the datastructure to a given value.
-*/
 func (u *UserHandlerService) ChangeUser(context context.Context, in *proto.ChangeUserRequest, out *proto.ChangeUserResponse) error {
 	if in.Change.Name != "" && u.containsID(in.Change.Userid) {
 		if u.change(in.Change.Userid, in.Change.Name) {
@@ -240,9 +207,6 @@ func (u *UserHandlerService) ChangeUser(context context.Context, in *proto.Chang
 	return fmt.Errorf("cannot change the user. The userid or the name are not ok. See: %d %s", in.Change.Userid, in.Change.Name)
 }
 
-/*
-ReceiveAndSendAllUsers will return a list with all users in our current service (id and name).
-*/
 func (u *UserHandlerService) ReceiveAndSendAllUsers(context context.Context, in *proto.AllUsersRequest, out *proto.AllUsersResponse) error {
 	if len(*u.getUserMap()) > 0 {
 		users := []*proto.UserMessageResponse{}

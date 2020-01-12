@@ -52,14 +52,14 @@ func TestDeleteShow(t *testing.T) {
 /*
 TestDeleteShowConnectedMove will be a testcase for deleting will be a testcase for deleting all shows with a specific movieId and cinemaid.
 
-func TestDeleteShowConnectedMovie(t *testing.T) {
+func TestDeleteShowMovie(t *testing.T) {
 	service := show.NewShowPool()
 	err := service.CreateShow(context.TODO(), &showtestproto.CreateShowRequest{CreateData: &showtestproto.ShowMessage{CinemaId: 1, MovieId: 1}}, &showtestproto.CreateShowResponse{})
 	err1 := service.CreateShow(context.TODO(), &showtestproto.CreateShowRequest{CreateData: &showtestproto.ShowMessage{CinemaId: 1, MovieId: 2}}, &showtestproto.CreateShowResponse{})
 	err2 := service.CreateShow(context.TODO(), &showtestproto.CreateShowRequest{CreateData: &showtestproto.ShowMessage{CinemaId: 1, MovieId: 3}}, &showtestproto.CreateShowResponse{})
 	err3 := service.CreateShow(context.TODO(), &showtestproto.CreateShowRequest{CreateData: &showtestproto.ShowMessage{CinemaId: 2, MovieId: 2}}, &showtestproto.CreateShowResponse{})
-	responseDeleteMovie := showtestproto.DeleteShowConnectedMovieResponse{}
-	err4 := service.DeleteShowConnectedMovie(context.TODO(), &showtestproto.DeleteShowConnectedMovieRequest{MovieId: 2}, &responseDeleteMovie)
+	responseDeleteMovie := showtestproto.DeleteShowMovieResponse{}
+	err4 := service.DeleteShowMovie(context.TODO(), &showtestproto.DeleteShowMovieRequest{MovieId: 2}, &responseDeleteMovie)
 	responseDeleteCinema := showtestproto.DeleteShowCinemaResponse{}
 	err5 := service.DeleteShowCinema(context.TODO(), &showtestproto.DeleteShowCinemaRequest{CinemaId: 1}, &responseDeleteCinema)
 
@@ -110,18 +110,18 @@ func TestListShow(t *testing.T) {
 }
 
 /*
-TestFindShowConnectedMovie will be a testcase for finding all shows with a specific movieId and cinemaid.
+TestFindShowCinema will be a testcase for finding all shows with a specific movieId and cinemaid.
 */
-func TestFindShowConnectedMovie(t *testing.T) {
+func TestFindShowCinema(t *testing.T) {
 	service := show.NewShowPool()
 	err := service.CreateShow(context.TODO(), &showtestproto.CreateShowRequest{CreateData: &showtestproto.ShowMessage{CinemaId: 1, MovieId: 1}}, &showtestproto.CreateShowResponse{})
 	err1 := service.CreateShow(context.TODO(), &showtestproto.CreateShowRequest{CreateData: &showtestproto.ShowMessage{CinemaId: 1, MovieId: 2}}, &showtestproto.CreateShowResponse{})
 	err2 := service.CreateShow(context.TODO(), &showtestproto.CreateShowRequest{CreateData: &showtestproto.ShowMessage{CinemaId: 1, MovieId: 3}}, &showtestproto.CreateShowResponse{})
 	err3 := service.CreateShow(context.TODO(), &showtestproto.CreateShowRequest{CreateData: &showtestproto.ShowMessage{CinemaId: 2, MovieId: 2}}, &showtestproto.CreateShowResponse{})
-	responseFindMovie := showtestproto.FindShowConnectedMovieResponse{}
-	err4 := service.FindShowConnectedMovie(context.TODO(), &showtestproto.FindShowConnectedMovieRequest{MovieId: 2}, &responseFindMovie)
-	responseFindCinema := showtestproto.FindShowConnectedCinemaResponse{}
-	err5 := service.FindShowConnectedCinema(context.TODO(), &showtestproto.FindShowConnectedCinemaRequest{CinemaId: 1}, &responseFindCinema)
+	responseFindMovie := showtestproto.FindShowCinemaResponse{}
+	err4 := service.FindShowCinema(context.TODO(), &showtestproto.FindShowCinemaRequest{MovieId: 2}, &responseFindMovie)
+	responseFindCinema := showtestproto.FindShowCinemaResponse{}
+	err5 := service.FindShowCinema(context.TODO(), &showtestproto.FindShowCinemaRequest{CinemaId: 1}, &responseFindCinema)
 
 	if err == nil && err1 == nil && err2 == nil && err3 == nil && err4 == nil && err5 == nil {
 		switch {

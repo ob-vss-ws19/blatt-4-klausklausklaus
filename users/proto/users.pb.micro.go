@@ -38,8 +38,8 @@ type UsersService interface {
 	//CreateUser will create user.
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...client.CallOption) (*CreatedUserResponse, error)
 	//
-	//FindUser will find a user by his userid.
-	FindUser(ctx context.Context, in *FindUserRequest, opts ...client.CallOption) (*FindUserResponse, error)
+	//FindUserByID will find a user by his userid.
+	FindUserByID(ctx context.Context, in *FindUserRequest, opts ...client.CallOption) (*FindUserResponse, error)
 	//
 	//FindUserByName will find a user by his name.
 	FindUserByName(ctx context.Context, in *FindUserByNameRequest, opts ...client.CallOption) (*FindUserResponse, error)
@@ -82,8 +82,8 @@ func (c *usersService) CreateUser(ctx context.Context, in *CreateUserRequest, op
 	return out, nil
 }
 
-func (c *usersService) FindUser(ctx context.Context, in *FindUserRequest, opts ...client.CallOption) (*FindUserResponse, error) {
-	req := c.c.NewRequest(c.name, "Users.FindUser", in)
+func (c *usersService) FindUserByID(ctx context.Context, in *FindUserRequest, opts ...client.CallOption) (*FindUserResponse, error) {
+	req := c.c.NewRequest(c.name, "Users.FindUserByID", in)
 	out := new(FindUserResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -139,8 +139,8 @@ type UsersHandler interface {
 	//CreateUser will create user.
 	CreateUser(context.Context, *CreateUserRequest, *CreatedUserResponse) error
 	//
-	//FindUser will find a user by his userid.
-	FindUser(context.Context, *FindUserRequest, *FindUserResponse) error
+	//FindUserByID will find a user by his userid.
+	FindUserByID(context.Context, *FindUserRequest, *FindUserResponse) error
 	//
 	//FindUserByName will find a user by his name.
 	FindUserByName(context.Context, *FindUserByNameRequest, *FindUserResponse) error
@@ -158,7 +158,7 @@ type UsersHandler interface {
 func RegisterUsersHandler(s server.Server, hdlr UsersHandler, opts ...server.HandlerOption) error {
 	type users interface {
 		CreateUser(ctx context.Context, in *CreateUserRequest, out *CreatedUserResponse) error
-		FindUser(ctx context.Context, in *FindUserRequest, out *FindUserResponse) error
+		FindUserByID(ctx context.Context, in *FindUserRequest, out *FindUserResponse) error
 		FindUserByName(ctx context.Context, in *FindUserByNameRequest, out *FindUserResponse) error
 		DeleteUser(ctx context.Context, in *DeleteUserRequest, out *DeleteUserResponse) error
 		ChangeUser(ctx context.Context, in *ChangeUserRequest, out *ChangeUserResponse) error
@@ -179,8 +179,8 @@ func (h *usersHandler) CreateUser(ctx context.Context, in *CreateUserRequest, ou
 	return h.UsersHandler.CreateUser(ctx, in, out)
 }
 
-func (h *usersHandler) FindUser(ctx context.Context, in *FindUserRequest, out *FindUserResponse) error {
-	return h.UsersHandler.FindUser(ctx, in, out)
+func (h *usersHandler) FindUserByID(ctx context.Context, in *FindUserRequest, out *FindUserResponse) error {
+	return h.UsersHandler.FindUserByID(ctx, in, out)
 }
 
 func (h *usersHandler) FindUserByName(ctx context.Context, in *FindUserByNameRequest, out *FindUserResponse) error {

@@ -75,9 +75,6 @@ type ReservationsDependency struct {
 	Show       func() showproto.ShowService
 }
 
-/*
-ReservatServiceHandler will handle all reservations.
-*/
 type ReservatServiceHandler struct {
 	reservations map[int32]*Reservation
 	unaccepted   map[int32]*Reservation
@@ -85,9 +82,6 @@ type ReservatServiceHandler struct {
 	mutex        *sync.Mutex
 }
 
-/*
-CreateNewReservationHandlerInstance will create a new service for the reservations management.
-*/
 func CreateNewReservationHandlerInstance() *ReservatServiceHandler {
 	return &ReservatServiceHandler{
 		reservations: map[int32]*Reservation{},
@@ -96,16 +90,10 @@ func CreateNewReservationHandlerInstance() *ReservatServiceHandler {
 	}
 }
 
-/*
-AddDependencyRes will add a dependency into the service.
-*/
 func (r *ReservatServiceHandler) AddDependencyRes(dep *ReservationsDependency) {
 	r.dependencies = dep
 }
 
-/*
-convertSeat will convert an array of *proto.Seats into an array of int32.
-*/
 func convertSeats(seats []*proto.Seat) []int32 {
 	newSeats := []int32{}
 	if len(seats) > 0 {
@@ -116,9 +104,6 @@ func convertSeats(seats []*proto.Seat) []int32 {
 	return newSeats
 }
 
-/*
-checkIfSeatIsTaken will check whether a given seat is already in a reservation.
-*/
 func (r *ReservatServiceHandler) checkIfSeatIsTaken(seat int32) bool {
 	for _, v := range *r.getReservationsMap() {
 		for _, resSeat := range v.Seats {
@@ -130,10 +115,6 @@ func (r *ReservatServiceHandler) checkIfSeatIsTaken(seat int32) bool {
 	return false
 }
 
-/*
-checkIfSeatsStillFree will take a slice of seats and check for all whether or not
-the seats are free or taken.
-*/
 func (r *ReservatServiceHandler) checkIfSeatsStillFree(seats *[]int32) bool {
 	for _, seat := range *seats {
 		if taken := r.checkIfSeatIsTaken(seat); taken {
@@ -143,9 +124,6 @@ func (r *ReservatServiceHandler) checkIfSeatsStillFree(seats *[]int32) bool {
 	return true
 }
 
-/*
-addInReservationsMap will add a reservation into the potantialreservationsmap and return true in case it worked.
-*/
 func (r *ReservatServiceHandler) addInReservationsMap(id int32, reserve Reservation) bool {
 	if reserve.UserID > 0 && reserve.ShowID > 0 && len(reserve.Seats) > 0 && r.checkIfSeatsStillFree(&reserve.Seats) {
 		(*r.getPotantialReservationsMap())[id] = &reserve
@@ -155,11 +133,6 @@ func (r *ReservatServiceHandler) addInReservationsMap(id int32, reserve Reservat
 	return false
 }
 
-/*
-This method will append a reservation to the structure of unaccepted reservations.
-If the service can reserve the reservation this method will return the ID and a bool to indecate
-whether or not it worked.
-*/
 func (r *ReservatServiceHandler) makePotentialReservation(seats []*proto.Seat, userid, showid int32) (bool, int32) {
 	seat := convertSeats(seats)
 	id := r.getRandomReservationsID(91734628)
@@ -173,9 +146,6 @@ func (r *ReservatServiceHandler) makePotentialReservation(seats []*proto.Seat, u
 	return false, -1
 }
 
-/*
-MakeReservation will receive a Reservsation request an store it temporally in the Database.
-*/
 func (r *ReservatServiceHandler) MakeReservation(ctx context.Context, in *proto.MakeReservationRequest, out *proto.MakeReservationResponse) error {
 	if len(in.Res.Seats) > 0 && in.Res.Show > 0 && in.Res.User > 0 {
 		r.mutex.Lock()
@@ -193,9 +163,6 @@ func (r *ReservatServiceHandler) MakeReservation(ctx context.Context, in *proto.
 	return fmt.Errorf("cannot create a reservation with an list of size: %d", len(in.Res.Seats))
 }
 
-/*
-swapValuesBetweenMaps will change a pair form unaccepted to reservations.
-*/
 func (r *ReservatServiceHandler) swapValuesBetweenMaps(id int32) bool {
 	if r.containsPotantialReservations(id) {
 		(*r.getReservationsMap())[id] = (*r.getPotantialReservationsMap())[id]
@@ -205,9 +172,6 @@ func (r *ReservatServiceHandler) swapValuesBetweenMaps(id int32) bool {
 	return false
 }
 
-/*
-convertSeatsToCinemaHallSeats will turn a seat id like 23 into a combination of row and column.
-*/
 func (r *ReservatServiceHandler) convertSeatsToCinemaHallSeats(ctx context.Context, seat int32) (int32, int32) {
 	service := r.dependencies.Cinemahall()
 	in := &protocin.SizeRequest{}
@@ -223,9 +187,6 @@ func (r *ReservatServiceHandler) convertSeatsToCinemaHallSeats(ctx context.Conte
 	return int32(-1), int32(-1)
 }
 
-/*
-makeSeatsCinemaHallSeats will turn a seat id into a row colum combination.
-*/
 func (r *ReservatServiceHandler) makeSeatsCinemaHallSeats(context context.Context, id int32, cinema *protocin.SizeResponse) *[]*protocin.SeatMessage {
 	seats := []*protocin.SeatMessage{}
 	if r.containsPotantialReservations(id) {
@@ -238,9 +199,6 @@ func (r *ReservatServiceHandler) makeSeatsCinemaHallSeats(context context.Contex
 	return &seats
 }
 
-/*
-AcceptReservation will accept a reservation of a temporally stored reservation request.
-*/
 func (r *ReservatServiceHandler) AcceptReservation(ctx context.Context, in *proto.AcceptReservationRequest, out *proto.AcceptReservationResponse) error {
 	r.mutex.Lock()
 	switch {
@@ -302,9 +260,6 @@ func (r *ReservatServiceHandler) AcceptReservation(ctx context.Context, in *prot
 	}
 }
 
-/*
-rdelete will delete a reservation from the map.
-*/
 func (r *ReservatServiceHandler) rdelete(id int32) bool {
 	if r.containsID(id) {
 		r.mutex.Lock()
@@ -315,9 +270,6 @@ func (r *ReservatServiceHandler) rdelete(id int32) bool {
 	return false
 }
 
-/*
-DeleteReservationByShowID will delete a reservation be the show id not by the user or reservation id.
-*/
 func (r *ReservatServiceHandler) DeleteReservationByShowID(ctx context.Context, showID int32) {
 	if showID > -1 {
 		for resID, reservation := range *r.getReservationsMap() {
@@ -328,9 +280,6 @@ func (r *ReservatServiceHandler) DeleteReservationByShowID(ctx context.Context, 
 	}
 }
 
-/*
-DeleteReservation will delete a final reservation from the database.
-*/
 func (r *ReservatServiceHandler) DeleteReservation(ctx context.Context, in *proto.DeleteReservationRequest, out *proto.DeleteReservationResponse) error {
 	switch {
 	case r.containsID(in.Id):
@@ -347,9 +296,6 @@ func (r *ReservatServiceHandler) DeleteReservation(ctx context.Context, in *prot
 	}
 }
 
-/*
-changeReservation will set the reservation in a map to a new one.
-*/
 func (r *ReservatServiceHandler) changeReservation(id int32, in proto.Reservation) bool {
 	if r.containsID(id) {
 		r.mutex.Lock()
@@ -364,9 +310,6 @@ func (r *ReservatServiceHandler) changeReservation(id int32, in proto.Reservatio
 	return false
 }
 
-/*
-ChangeReservation will change a reservation for example the place of the reservation.
-*/
 func (r *ReservatServiceHandler) ChangeReservation(ctx context.Context, in *proto.ChangeReservationRequest, out *proto.ChangeReservationResponse) error {
 	if r.containsID(in.Res.ResId) {
 		if changed := r.changeReservation(in.Res.ResId, *in.Res); changed {
@@ -378,9 +321,6 @@ func (r *ReservatServiceHandler) ChangeReservation(ctx context.Context, in *prot
 	return fmt.Errorf("cannot change the reservation with the id: %d", in.Res.ResId)
 }
 
-/*
-FindSingleReservation will find a single reservation by a given id an return the reservation.
-*/
 func (r *ReservatServiceHandler) FindSingleReservation(id int32) *Reservation {
 	if (id) > 0 && r.containsID(id) {
 		for k, v := range *r.getReservationsMap() {
@@ -392,9 +332,6 @@ func (r *ReservatServiceHandler) FindSingleReservation(id int32) *Reservation {
 	return nil
 }
 
-/*
-makeSeatToProtoSeat will switch a seat into a protoseat type --> Typcast like function.
-*/
 func makeSeatToProtoSeat(localseats []int32) []*proto.Seat {
 	convertedSeats := []*proto.Seat{}
 	if len(localseats) > 0 {
@@ -407,9 +344,6 @@ func makeSeatToProtoSeat(localseats []int32) []*proto.Seat {
 	return convertedSeats
 }
 
-/*
-ShowReservations will send a reservation to the client
-*/
 func (r *ReservatServiceHandler) ShowReservations(ctx context.Context, in *proto.ShowReservationsRequest, out *proto.ShowReservationsResponse) error {
 	if (in.Id) > 0 && r.containsID(in.Id) {
 		reservation := r.FindSingleReservation(in.Id)
@@ -424,9 +358,6 @@ func (r *ReservatServiceHandler) ShowReservations(ctx context.Context, in *proto
 	return fmt.Errorf("cannot find a user with this id: %d", in.Id)
 }
 
-/*
-prepareStream will turn a map[int32]*Reservations into a streamable list.
-*/
 func (r *ReservatServiceHandler) prepareStream() []*proto.Reservation {
 	if len(r.reservations) > 0 {
 		res := []*proto.Reservation{}
@@ -443,9 +374,6 @@ func (r *ReservatServiceHandler) prepareStream() []*proto.Reservation {
 	return nil
 }
 
-/*
-StreamUsersReservations will send all reservations.
-*/
 func (r *ReservatServiceHandler) StreamUsersReservations(ctx context.Context, in *proto.StreamUsersReservationsRequest, out *proto.StreamUsersReservationsResponse) error {
 	if reservations := r.prepareStream(); len(reservations) > 0 {
 		out.Reservations = reservations
@@ -455,11 +383,6 @@ func (r *ReservatServiceHandler) StreamUsersReservations(ctx context.Context, in
 	return fmt.Errorf("there is noting yet we could stream")
 }
 
-/*
-FindUserIfReservation will search for reservations of a user and return true in case there is atleast on.
-It also will return how many reservations. It will check in Both the potantial and the real reservations.
-It will also return a bool in case the are unaccepted reservations.
-*/
 func (r *ReservatServiceHandler) FindUserIfReservation(id int32) (bool, int32, bool) {
 	if id > 0 {
 		r.mutex.Lock()
@@ -482,9 +405,6 @@ func (r *ReservatServiceHandler) FindUserIfReservation(id int32) (bool, int32, b
 	return false, -1, false
 }
 
-/*
-HasReservations will send a bool and an int32 to indicate that.
-*/
 func (r *ReservatServiceHandler) HasReservations(ctx context.Context, in *proto.HasReservationsRequest, out *proto.HasReservationsResponse) error {
 	has, howmuch, _ := r.FindUserIfReservation(in.Res.User)
 	switch {

@@ -13,6 +13,7 @@ import (
 Main Function to start a new users service.
 */
 func main() {
+
 	service := micro.NewService(micro.Name("users"))
 	service.Init()
 	newUserService := us.CreateNewUserHandleInstance()

@@ -11,6 +11,7 @@ import (
 )
 
 func main() {
+	
 	service := micro.NewService(micro.Name("reservation"))
 	service.Init()
 	newResService := res.CreateNewReservationHandlerInstance()

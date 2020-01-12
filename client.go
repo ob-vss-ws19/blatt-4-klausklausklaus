@@ -15,23 +15,23 @@ import (
 )
 
 func main() {
-	fmt.Println("Start Test Skript")
+	fmt.Println("Starting Test... ")
 	clientService := micro.NewService(micro.Name("Client"))
 	clientService.Init()
 
-	fmt.Println("Creating 5 Movies")
+	fmt.Println("Creating 5 Movies...")
 	_, moviearray := createTestMovies(clientService)
 
-	fmt.Println("Creating 3 Cinemas")
+	fmt.Println("Creating 3 Cinemas...")
 	cinemaService, cinemaarray := createTestCinemas(clientService)
 
-	fmt.Println("Creating 6 Users")
+	fmt.Println("Creating 6 Users...")
 	_, userarray := createTestUsers(clientService)
 
-	fmt.Println("Creating 3 Shows")
+	fmt.Println("Creating 3 Shows...")
 	showService, showarray := createTestShows(clientService, moviearray, cinemaarray)
 
-	fmt.Println("Creating Reservation")
+	fmt.Println("Creating Reservation...")
 	reservationService, _ := createTestReservations(clientService, showarray, userarray)
 
 	fmt.Println("Scenario 1")

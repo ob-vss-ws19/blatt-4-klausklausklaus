@@ -16,16 +16,10 @@ const (
 	maxcinemaid = 432342
 )
 
-/*
-CinemaDependency will be the dependency for a Cinema.
-*/
 type CinemaDependency struct {
 	ShowService func() showproto.ShowService
 }
 
-/*
-CinemaPool contains all cinemas.
-*/
 type CinemaPool struct {
 	cinemamap  map[int32]*cinema
 	mutex      *sync.Mutex
@@ -44,16 +38,10 @@ type cinema struct {
 	colum   int32
 }
 
-/*
-AddDependency will add all dependencys to the service.
-*/
 func (handler *CinemaPool) AddDependency(dep *CinemaDependency) {
 	handler.dependency = dep
 }
 
-/*
-NewCinemaPool creates a new CinemaPool
-*/
 func NewCinemaPool() *CinemaPool {
 	newcinema := make(map[int32]*cinema)
 
@@ -102,10 +90,6 @@ func (currentcinema *cinema) getSeat(row int32, column int32) *seats {
 	return nil
 }
 
-/*
-Create creates a new cinema. It will be saved in the CinemaPool. The id to access the new cinema will be randomly generated.
-If the creation was successful the id will be returned
-*/
 func (handler *CinemaPool) Create(ctx context.Context, request *cinemaproto.CreateCinemaRequest, response *cinemaproto.CreateCinemaResponse) error {
 	if len(request.Name) == 0 || request.Row == 0 || request.Column == 0 {
 		return errors.New("cinema service - create | Cannot create a cinema with an empty name, zero rows or zero columns")
@@ -127,9 +111,6 @@ func (handler *CinemaPool) Create(ctx context.Context, request *cinemaproto.Crea
 	return nil
 }
 
-/*
-GetSizeOfCinema will sendof the size.
-*/
 func (handler *CinemaPool) GetSizeOfCinema(ctx context.Context, in *cinemaproto.SizeRequest, out *cinemaproto.SizeResponse) error {
 	if handler.containscinema(in.Id) {
 		out.Row = handler.cinemamap[in.Id].row
@@ -139,9 +120,6 @@ func (handler *CinemaPool) GetSizeOfCinema(ctx context.Context, in *cinemaproto.
 	return fmt.Errorf("cannot get the size of the cinema by this id %d", in.Id)
 }
 
-/*
-DeleteShows will delete a show incase a cienma will be deleted.
-*/
 func (handler *CinemaPool) DeleteShows(ctx context.Context, cinemaid int32) {
 	if handler.containscinema(cinemaid) {
 		service := handler.dependency.ShowService()
@@ -153,9 +131,6 @@ func (handler *CinemaPool) DeleteShows(ctx context.Context, cinemaid int32) {
 	}
 }
 
-/*
-Delete will delete a cinema(id) from the CinemaPool.
-*/
 func (handler *CinemaPool) Delete(ctx context.Context, request *cinemaproto.DeleteCinemaRequest, response *cinemaproto.DeleteCinemaResponse) error {
 	handler.mutex.Lock()
 	mapcontainscinema := handler.containscinema(request.Id)
@@ -170,9 +145,6 @@ func (handler *CinemaPool) Delete(ctx context.Context, request *cinemaproto.Dele
 	return nil
 }
 
-/*
-Reservation will change the value in the seatmap of a cinema to true (for the given row and column) if the seat is still available
-*/
 func (handler *CinemaPool) Reservation(ctx context.Context, request *cinemaproto.ReservationRequest, response *cinemaproto.ReservationResponse) error {
 	handler.mutex.Lock()
 	currentcinema, mapcontainscinema := handler.containsandreturncinema(request.Id)
@@ -193,9 +165,6 @@ func (handler *CinemaPool) Reservation(ctx context.Context, request *cinemaproto
 	return nil
 }
 
-/*
-Storno will undo a reservation
-*/
 func (handler *CinemaPool) Storno(ctx context.Context, request *cinemaproto.StornoRequest, response *cinemaproto.StornoResponse) error {
 	handler.mutex.Lock()
 	currentcinema, mapcontainscinema := handler.containsandreturncinema(request.Id)
@@ -217,9 +186,6 @@ func (handler *CinemaPool) Storno(ctx context.Context, request *cinemaproto.Stor
 	return nil
 }
 
-/*
-CheckSeats checks if the requested seats are available
-*/
 func (handler *CinemaPool) CheckSeats(ctx context.Context, request *cinemaproto.CheckSeatsRequest, response *cinemaproto.CheckSeatsResponse) error {
 	handler.mutex.Lock()
 	currentcinema, mapcontainscinema := handler.containsandreturncinema(request.Id)
@@ -246,9 +212,6 @@ func (handler *CinemaPool) CheckSeats(ctx context.Context, request *cinemaproto.
 	return nil
 }
 
-/*
-FreeSeats returns all seats that are available
-*/
 func (handler *CinemaPool) FreeSeats(ctx context.Context, request *cinemaproto.FreeSeatsRequest, response *cinemaproto.FreeSeatsResponse) error {
 	handler.mutex.Lock()
 	currentcinema, mapcontainscinema := handler.containsandreturncinema(request.Id)

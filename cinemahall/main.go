@@ -10,11 +10,9 @@ import (
 	cinemaprotomain "github.com/ob-vss-ws19/blatt-4-klausklausklaus/cinemahall/proto"
 )
 
-const serviceName = "cinemahall"
-
 func main() {
 	service := cinemamicromain.NewService(
-		cinemamicromain.Name(serviceName),
+		cinemamicromain.Name("cinemahall"),
 	)
 	service.Init()
 	newService := cinemahall.NewCinemaPool()

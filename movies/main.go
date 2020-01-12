@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	
 	service := micro.NewService(micro.Name("movies"))
 	service.Init()
 	err1 := proto.RegisterMoviesHandler(service.Server(), movies.CreateNewMoviesHandlerInstance())

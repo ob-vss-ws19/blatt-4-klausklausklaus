@@ -16,9 +16,6 @@ const (
 	SecondName = "Paulanius"
 )
 
-/*
-TestAddUser will be a testcase for adding users into the service.
-*/
 func TestAddUser(t *testing.T) {
 	service := users.CreateNewUserHandleInstance()
 	response := protoo.CreatedUserResponse{User: &protoo.UserMessageResponse{}}
@@ -37,10 +34,6 @@ func TestAddUser(t *testing.T) {
 	}
 }
 
-/*
-TestGetInformationFromMap will be a testcase for adding users into the service and
-get all information from him from the map.
-*/
 func TestGetInformationFromMap(t *testing.T) {
 	service := users.CreateNewUserHandleInstance()
 	responseInsert := protoo.CreatedUserResponse{User: &protoo.UserMessageResponse{}}
@@ -61,10 +54,6 @@ func TestGetInformationFromMap(t *testing.T) {
 	}
 }
 
-/*
-TestGetInformationFromMap will be a testcase for adding users into the service and
-get all information from him from the map.
-*/
 func TestGetInformationFromMapByName(t *testing.T) {
 	service := users.CreateNewUserHandleInstance()
 	responseInsert := protoo.CreatedUserResponse{User: &protoo.UserMessageResponse{}}
@@ -86,9 +75,6 @@ func TestGetInformationFromMapByName(t *testing.T) {
 	}
 }
 
-/*
-TestAddUserAndFindHim will be a testcase for adding users into the service and try to find him by ID.
-*/
 func TestAddUserAndFindHim(t *testing.T) {
 	service := users.CreateNewUserHandleInstance()
 	responseInsert := protoo.CreatedUserResponse{User: &protoo.UserMessageResponse{}}
@@ -98,7 +84,7 @@ func TestAddUserAndFindHim(t *testing.T) {
 
 	vid := responseInsert.User.Userid
 
-	err1 := service.FindUser(context.TODO(), &protoo.FindUserRequest{User: &protoo.UserMessageRequest{Userid: vid}}, &responseFind)
+	err1 := service.FindUserByID(context.TODO(), &protoo.FindUserRequest{User: &protoo.UserMessageRequest{Userid: vid}}, &responseFind)
 
 	if err == nil && err1 == nil {
 		switch {
@@ -115,9 +101,6 @@ func TestAddUserAndFindHim(t *testing.T) {
 	}
 }
 
-/*
-TestAddUserAndFindHim will be a testcase for adding users into the service and try to find him by his name.
-*/
 func TestAddUserAndFindHimByHisName(t *testing.T) {
 	service := users.CreateNewUserHandleInstance()
 	responseInsert := protoo.CreatedUserResponse{User: &protoo.UserMessageResponse{}}
@@ -146,10 +129,6 @@ func TestAddUserAndFindHimByHisName(t *testing.T) {
 	}
 }
 
-/*
-TestChange will create a user change him an later on call getinformationfrommap in order to see whether or not something
-has changed.
-*/
 func TestAddChangeAndGetInfo(t *testing.T) {
 	service := users.CreateNewUserHandleInstance()
 	responseInsert := protoo.CreatedUserResponse{User: &protoo.UserMessageResponse{}}
@@ -176,36 +155,6 @@ func TestAddChangeAndGetInfo(t *testing.T) {
 	}
 }
 
-/*
-TestChange will create a user and later on delete him.
-func TestAddandDeleteAUser(t *testing.T) {
-	service := users.CreateNewUserHandleInstance()
-	responseInsert := protoo.CreatedUserResponse{User: &protoo.UserMessageResponse{}}
-	err := service.CreateUser(context.TODO(), &protoo.CreateUserRequest{Name: TestName}, &responseInsert)
-	id := responseInsert.User.Userid
-	deleteResponse := protoo.DeleteUserResponse{}
-	err1 := service.DeleteUser(context.TODO(), &protoo.DeleteUserRequest{User: &protoo.UserMessageRequest{Userid: id}}, &deleteResponse)
-
-	responseFind := protoo.FindUserResponse{User: &protoo.UserMessageResponse{}}
-
-	err2 := service.FindUser(context.TODO(), &protoo.FindUserRequest{User: &protoo.UserMessageRequest{Userid: id}}, &responseFind)
-	if err == nil && err1 == nil && err2 == nil {
-		if !deleteResponse.IsDeleted && responseFind.User.Userid == -1 {
-			t.Errorf("User was deleted. Found by getinformationfrommap but did not send the correct response.")
-		} else {
-			t.Log("Create a user and change him later on is fine.")
-		}
-	} else {
-		fmt.Println(err)
-		fmt.Println(err1)
-		fmt.Println(err2)
-	}
-}
-*/
-
-/*
-TestChange will create bunch of users and read them later on all from the service.
-*/
 func TestAddMultipleUsersAndReadAllOfThem(t *testing.T) {
 	service := users.CreateNewUserHandleInstance()
 	responseInsert := protoo.CreatedUserResponse{User: &protoo.UserMessageResponse{}}

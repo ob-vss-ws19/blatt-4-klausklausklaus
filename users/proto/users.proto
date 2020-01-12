@@ -13,9 +13,9 @@ service users {
     rpc CreateUser(CreateUserRequest) returns (CreatedUserResponse) {}
 
     /*
-    FindUser will find a user by his userid.
+    FindUserByID will find a user by his userid.
     */
-    rpc FindUser(FindUserRequest) returns (FindUserResponse) {}
+    rpc FindUserByID(FindUserRequest) returns (FindUserResponse) {}
 
     /*
     FindUserByName will find a user by his name.

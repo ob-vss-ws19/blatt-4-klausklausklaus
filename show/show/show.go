@@ -141,9 +141,9 @@ func (handler *ShowPool) deleteReservations(context context.Context, todelete in
 }
 
 /*
-DeleteShowConnectedMovie will delete all shows connected to a movie.
+DeleteShowMovie will delete all shows connected to a movie.
 */
-func (handler *ShowPool) DeleteShowConnectedMovie(ctx context.Context, request *showproto.DeleteShowConnectedMovieRequest, response *showproto.DeleteShowConnectedMovieResponse) error {
+func (handler *ShowPool) DeleteShowMovie(ctx context.Context, request *showproto.DeleteShowMovieRequest, response *showproto.DeleteShowMovieResponse) error {
 	if request.MovieId > 0 {
 		handler.mutex.Lock()
 		success := false
@@ -181,9 +181,9 @@ func (handler *ShowPool) ListShow(ctx context.Context, request *showproto.ListSh
 }
 
 /*
-FindShowConnectedCinema shows all shows connected to a cinema.
+FindShowCinema shows all shows linked to a cinema.
 */
-func (handler *ShowPool) FindShowConnectedCinema(ctx context.Context, request *showproto.FindShowConnectedCinemaRequest, response *showproto.FindShowConnectedCinemaResponse) error {
+func (handler *ShowPool) FindShowCinema(ctx context.Context, request *showproto.FindShowCinemaRequest, response *showproto.FindShowCinemaResponse) error {
 	if request.CinemaId > 0 {
 		ids := []int32{}
 		responseData := []*showproto.ShowMessage{}
@@ -202,7 +202,7 @@ func (handler *ShowPool) FindShowConnectedCinema(ctx context.Context, request *s
 	return fmt.Errorf("cannot find show with cinemaID: %d", request.CinemaId)
 }
 
-func (handler *ShowPool) FindShowConnectedMovie(ctx context.Context, request *showproto.FindShowConnectedMovieRequest, response *showproto.FindShowConnectedMovieResponse) error {
+func (handler *ShowPool) FindShowCinema(ctx context.Context, request *showproto.FindShowCinemaRequest, response *showproto.FindShowCinemaResponse) error {
 	if request.MovieId > 0 {
 		responseData := []*showproto.ShowMessage{}
 		handler.mutex.Lock()

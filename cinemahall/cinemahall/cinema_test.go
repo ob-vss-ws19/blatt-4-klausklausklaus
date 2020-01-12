@@ -9,31 +9,6 @@ import (
 	cinemaprototest "github.com/ob-vss-ws19/blatt-4-klausklausklaus/cinemahall/proto"
 )
 
-/*
-TestCreate will be a testcase for adding a cinema into the service.
-*/
-func TestCreate(t *testing.T) {
-	TestName := "C1"
-	service := cinemahall.NewCinemaPool()
-	response := cinemaprototest.CreateCinemaResponse{}
-	err := service.Create(context.TODO(), &cinemaprototest.CreateCinemaRequest{Name: TestName, Row: 5, Column: 5}, &response)
-	if err == nil {
-		switch {
-		case response.Name != "C1":
-			t.Errorf("Cannot create a cinema with the name %s", TestName)
-		case response.Id < 0:
-			t.Fatal("Cannot create a cinema with a proper ID")
-		default:
-			t.Log("Creating a Cinema will work.")
-		}
-	} else {
-		fmt.Println(err)
-	}
-}
-
-/*
-TestDelete will be a testcase for deleting a cinema from the service.
-*/
 func TestDelete(t *testing.T) {
 	TestName := "C1"
 	service := cinemahall.NewCinemaPool()
@@ -53,9 +28,25 @@ func TestDelete(t *testing.T) {
 	}
 }
 
-/*
-TestReservation will be a testcase for doing a reservation.
-*/
+func TestCreate(t *testing.T) {
+	TestName := "C1"
+	service := cinemahall.NewCinemaPool()
+	response := cinemaprototest.CreateCinemaResponse{}
+	err := service.Create(context.TODO(), &cinemaprototest.CreateCinemaRequest{Name: TestName, Row: 5, Column: 5}, &response)
+	if err == nil {
+		switch {
+		case response.Name != "C1":
+			t.Errorf("Cannot create a cinema with the name %s", TestName)
+		case response.Id < 0:
+			t.Fatal("Cannot create a cinema with a proper ID")
+		default:
+			t.Log("Creating a Cinema will work.")
+		}
+	} else {
+		fmt.Println(err)
+	}
+}
+
 func TestReservation(t *testing.T) {
 	TestName := "C1"
 	service := cinemahall.NewCinemaPool()
@@ -78,9 +69,6 @@ func TestReservation(t *testing.T) {
 	}
 }
 
-/*
-TestStorno will be a testcase for doing a storno.
-*/
 func TestStorno(t *testing.T) {
 	TestName := "C1"
 	service := cinemahall.NewCinemaPool()
@@ -106,9 +94,6 @@ func TestStorno(t *testing.T) {
 	}
 }
 
-/*
-CheckSeats will be a testcase to CheckSeats.
-*/
 func TestCheckSeats(t *testing.T) {
 	TestName := "C1"
 	service := cinemahall.NewCinemaPool()
@@ -134,9 +119,6 @@ func TestCheckSeats(t *testing.T) {
 	}
 }
 
-/*
-FreeSeats will be a testcase to check FreeSeats.
-*/
 func TestFreeSeats(t *testing.T) {
 	TestName := "C1"
 	service := cinemahall.NewCinemaPool()

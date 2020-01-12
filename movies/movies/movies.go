@@ -14,42 +14,19 @@ const (
 	maxmoviesid int32 = 98765432
 )
 
-/*
-Movie will represent a movie.
-*/
 type Movie struct {
 	name string
 }
 
-/*
-getName will return the name of the given movie.
-*/
 func (mo *Movie) getName() string {
 	return mo.name
 }
 
-/*
-MovieHandlerService will be the representation of our service.
-*/
 type MovieHandlerService struct {
 	movies map[int32]*Movie
 	mutex  *sync.Mutex
 }
 
-/*
-containsID will check whether generated ID is already set or not.
-@id will be a int32 id to check for.
-*/
-func (m *MovieHandlerService) containsID(id int32) bool {
-	_, inMap := (*m.getMoviesMap())[id]
-	return inMap
-}
-
-/*
-Function to produce a random moviesID.
-@param length will be the length of the number.
-@param seed will be a seed in order to produce "really" random numbers.
-*/
 func (m *MovieHandlerService) getRandomMovieID(length int32) int32 {
 	rand.Seed(time.Now().UnixNano())
 	for {
@@ -60,24 +37,15 @@ func (m *MovieHandlerService) getRandomMovieID(length int32) int32 {
 	}
 }
 
-/*
-getMoviesMap will return a pointer to the current movie map in order to work in that.
-*/
+func (m *MovieHandlerService) containsID(id int32) bool {
+	_, inMap := (*m.getMoviesMap())[id]
+	return inMap
+}
+
 func (m *MovieHandlerService) getMoviesMap() *map[int32]*Movie {
 	return &m.movies
 }
 
-/*
-setMoviesMap will set the map of a moviehandlerservice instance.
-@param movies will be the map to set.
-func (m *MovieHandlerService) setMoviesMap(movies *map[int32]*Movie) {
-	m.movies = *movies
-}
-*/
-
-/*
-CreateNewMoviesHandlerInstance will return a new movies instance.
-*/
 func CreateNewMoviesHandlerInstance() *MovieHandlerService {
 	return &MovieHandlerService{
 		movies: make(map[int32]*Movie),
@@ -85,9 +53,6 @@ func CreateNewMoviesHandlerInstance() *MovieHandlerService {
 	}
 }
 
-/*
-appendMovie will add a movie in the datastructure.
-*/
 func (m *MovieHandlerService) appendMovie(id int32, movie *Movie) bool {
 	if id > 0 && movie != nil {
 		m.mutex.Lock()
@@ -98,9 +63,6 @@ func (m *MovieHandlerService) appendMovie(id int32, movie *Movie) bool {
 	return false
 }
 
-/*
-CreateMovie will create a movie.
-*/
 func (m *MovieHandlerService) CreateMovie(context context.Context, in *proto.CreateMovieRequest, out *proto.CreatedMovieResponse) error {
 	if in.GetName() != "" {
 		mid := m.getRandomMovieID(maxmoviesid)
@@ -112,9 +74,6 @@ func (m *MovieHandlerService) CreateMovie(context context.Context, in *proto.Cre
 	return fmt.Errorf("cannot create movie with an empty name")
 }
 
-/*
-change will change an entry in the "database".
-*/
 func (m *MovieHandlerService) change(id int32, pname string) bool {
 	if m.containsID(id) {
 		m.mutex.Lock()
@@ -125,22 +84,7 @@ func (m *MovieHandlerService) change(id int32, pname string) bool {
 	return false
 }
 
-/*
-ChangeMovie will change a movie.
-*/
-func (m *MovieHandlerService) ChangeMovie(ctx context.Context, in *proto.ChangeMovieRequest, out *proto.ChangeMovieResponse) error {
-	if in.Movie.Id > 0 && in.Movie.Name != "" {
-		if m.change(in.Movie.Id, in.Movie.Name) {
-			out.Changed = true
-			return nil
-		}
-	}
-	return fmt.Errorf("cannot change the movie. The movie id or the name are not ok. See: %d %s", in.Movie.Id, in.Movie.Name)
-}
 
-/*
-StreamMovie will stream all movies from a service.
-*/
 func (m *MovieHandlerService) StreamMovie(ctx context.Context, in *proto.StreamMovieRequest, out *proto.StreamMovieResponse) error {
 	if len(*m.getMoviesMap()) > 0 {
 		movies := []*proto.Movie{}
@@ -152,9 +96,15 @@ func (m *MovieHandlerService) StreamMovie(ctx context.Context, in *proto.StreamM
 	return fmt.Errorf("there are currently no movies store (Advice: find some customers)")
 }
 
-/*
-DeleteMovie will delete a movie from the "db".
-*/
+func (m *MovieHandlerService) ChangeMovie(ctx context.Context, in *proto.ChangeMovieRequest, out *proto.ChangeMovieResponse) error {
+	if in.Movie.Id > 0 && in.Movie.Name != "" {
+		if m.change(in.Movie.Id, in.Movie.Name) {
+			out.Changed = true
+			return nil
+		}
+	}
+	return fmt.Errorf("cannot change the movie. The movie id or the name are not ok. See: %d %s", in.Movie.Id, in.Movie.Name)
+}
 func (m *MovieHandlerService) DeleteMovie(ctx context.Context, in *proto.DeleteMovieRequest, out *proto.DeleteMovieResponse) error {
 	if m.containsID(in.Id) {
 		m.mutex.Lock()
@@ -166,10 +116,6 @@ func (m *MovieHandlerService) DeleteMovie(ctx context.Context, in *proto.DeleteM
 	return fmt.Errorf("cannot delete movie with the id %d", in.Id)
 }
 
-/*
-Find will search by a given value for its oppotsite. E.g if you
-have the name you can get the id.
-*/
 func (m *MovieHandlerService) Find(value interface{}) interface{} {
 	switch tp := value.(type) {
 	case int32:
@@ -189,9 +135,6 @@ func (m *MovieHandlerService) Find(value interface{}) interface{} {
 	}
 }
 
-/*
-FindMovie will find a movie.
-*/
 func (m *MovieHandlerService) FindMovie(ctx context.Context, in *proto.FindMovieRequest, out *proto.FindMovieResponse) error {
 	switch {
 	case m.containsID(in.Movie.Id):

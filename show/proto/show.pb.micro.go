@@ -37,10 +37,10 @@ type ShowService interface {
 	CreateShow(ctx context.Context, in *CreateShowRequest, opts ...client.CallOption) (*CreateShowResponse, error)
 	DeleteShow(ctx context.Context, in *DeleteShowRequest, opts ...client.CallOption) (*DeleteShowResponse, error)
 	DeleteShowCinema(ctx context.Context, in *DeleteShowCinemaRequest, opts ...client.CallOption) (*DeleteShowCinemaResponse, error)
-	DeleteShowConnectedMovie(ctx context.Context, in *DeleteShowConnectedMovieRequest, opts ...client.CallOption) (*DeleteShowConnectedMovieResponse, error)
+	DeleteShowMovie(ctx context.Context, in *DeleteShowMovieRequest, opts ...client.CallOption) (*DeleteShowMovieResponse, error)
 	ListShow(ctx context.Context, in *ListShowRequest, opts ...client.CallOption) (*ListShowResponse, error)
-	FindShowConnectedCinema(ctx context.Context, in *FindShowConnectedCinemaRequest, opts ...client.CallOption) (*FindShowConnectedCinemaResponse, error)
-	FindShowConnectedMovie(ctx context.Context, in *FindShowConnectedMovieRequest, opts ...client.CallOption) (*FindShowConnectedMovieResponse, error)
+	FindShowCinema(ctx context.Context, in *FindShowCinemaRequest, opts ...client.CallOption) (*FindShowCinemaResponse, error)
+	FindShowCinema(ctx context.Context, in *FindShowCinemaRequest, opts ...client.CallOption) (*FindShowCinemaResponse, error)
 }
 
 type showService struct {
@@ -91,9 +91,9 @@ func (c *showService) DeleteShowCinema(ctx context.Context, in *DeleteShowCinema
 	return out, nil
 }
 
-func (c *showService) DeleteShowConnectedMovie(ctx context.Context, in *DeleteShowConnectedMovieRequest, opts ...client.CallOption) (*DeleteShowConnectedMovieResponse, error) {
-	req := c.c.NewRequest(c.name, "Show.DeleteShowConnectedMovie", in)
-	out := new(DeleteShowConnectedMovieResponse)
+func (c *showService) DeleteShowMovie(ctx context.Context, in *DeleteShowMovieRequest, opts ...client.CallOption) (*DeleteShowMovieResponse, error) {
+	req := c.c.NewRequest(c.name, "Show.DeleteShowMovie", in)
+	out := new(DeleteShowMovieResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -111,9 +111,9 @@ func (c *showService) ListShow(ctx context.Context, in *ListShowRequest, opts ..
 	return out, nil
 }
 
-func (c *showService) FindShowConnectedCinema(ctx context.Context, in *FindShowConnectedCinemaRequest, opts ...client.CallOption) (*FindShowConnectedCinemaResponse, error) {
-	req := c.c.NewRequest(c.name, "Show.FindShowConnectedCinema", in)
-	out := new(FindShowConnectedCinemaResponse)
+func (c *showService) FindShowCinema(ctx context.Context, in *FindShowCinemaRequest, opts ...client.CallOption) (*FindShowCinemaResponse, error) {
+	req := c.c.NewRequest(c.name, "Show.FindShowCinema", in)
+	out := new(FindShowCinemaResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -121,9 +121,9 @@ func (c *showService) FindShowConnectedCinema(ctx context.Context, in *FindShowC
 	return out, nil
 }
 
-func (c *showService) FindShowConnectedMovie(ctx context.Context, in *FindShowConnectedMovieRequest, opts ...client.CallOption) (*FindShowConnectedMovieResponse, error) {
-	req := c.c.NewRequest(c.name, "Show.FindShowConnectedMovie", in)
-	out := new(FindShowConnectedMovieResponse)
+func (c *showService) FindShowCinema(ctx context.Context, in *FindShowCinemaRequest, opts ...client.CallOption) (*FindShowCinemaResponse, error) {
+	req := c.c.NewRequest(c.name, "Show.FindShowCinema", in)
+	out := new(FindShowCinemaResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -137,10 +137,10 @@ type ShowHandler interface {
 	CreateShow(context.Context, *CreateShowRequest, *CreateShowResponse) error
 	DeleteShow(context.Context, *DeleteShowRequest, *DeleteShowResponse) error
 	DeleteShowCinema(context.Context, *DeleteShowCinemaRequest, *DeleteShowCinemaResponse) error
-	DeleteShowConnectedMovie(context.Context, *DeleteShowConnectedMovieRequest, *DeleteShowConnectedMovieResponse) error
+	DeleteShowMovie(context.Context, *DeleteShowMovieRequest, *DeleteShowMovieResponse) error
 	ListShow(context.Context, *ListShowRequest, *ListShowResponse) error
-	FindShowConnectedCinema(context.Context, *FindShowConnectedCinemaRequest, *FindShowConnectedCinemaResponse) error
-	FindShowConnectedMovie(context.Context, *FindShowConnectedMovieRequest, *FindShowConnectedMovieResponse) error
+	FindShowCinema(context.Context, *FindShowCinemaRequest, *FindShowCinemaResponse) error
+	FindShowCinema(context.Context, *FindShowCinemaRequest, *FindShowCinemaResponse) error
 }
 
 func RegisterShowHandler(s server.Server, hdlr ShowHandler, opts ...server.HandlerOption) error {
@@ -148,10 +148,10 @@ func RegisterShowHandler(s server.Server, hdlr ShowHandler, opts ...server.Handl
 		CreateShow(ctx context.Context, in *CreateShowRequest, out *CreateShowResponse) error
 		DeleteShow(ctx context.Context, in *DeleteShowRequest, out *DeleteShowResponse) error
 		DeleteShowCinema(ctx context.Context, in *DeleteShowCinemaRequest, out *DeleteShowCinemaResponse) error
-		DeleteShowConnectedMovie(ctx context.Context, in *DeleteShowConnectedMovieRequest, out *DeleteShowConnectedMovieResponse) error
+		DeleteShowMovie(ctx context.Context, in *DeleteShowMovieRequest, out *DeleteShowMovieResponse) error
 		ListShow(ctx context.Context, in *ListShowRequest, out *ListShowResponse) error
-		FindShowConnectedCinema(ctx context.Context, in *FindShowConnectedCinemaRequest, out *FindShowConnectedCinemaResponse) error
-		FindShowConnectedMovie(ctx context.Context, in *FindShowConnectedMovieRequest, out *FindShowConnectedMovieResponse) error
+		FindShowCinema(ctx context.Context, in *FindShowCinemaRequest, out *FindShowCinemaResponse) error
+		FindShowCinema(ctx context.Context, in *FindShowCinemaRequest, out *FindShowCinemaResponse) error
 	}
 	type Show struct {
 		show
@@ -176,18 +176,18 @@ func (h *showHandler) DeleteShowCinema(ctx context.Context, in *DeleteShowCinema
 	return h.ShowHandler.DeleteShowCinema(ctx, in, out)
 }
 
-func (h *showHandler) DeleteShowConnectedMovie(ctx context.Context, in *DeleteShowConnectedMovieRequest, out *DeleteShowConnectedMovieResponse) error {
-	return h.ShowHandler.DeleteShowConnectedMovie(ctx, in, out)
+func (h *showHandler) DeleteShowMovie(ctx context.Context, in *DeleteShowMovieRequest, out *DeleteShowMovieResponse) error {
+	return h.ShowHandler.DeleteShowMovie(ctx, in, out)
 }
 
 func (h *showHandler) ListShow(ctx context.Context, in *ListShowRequest, out *ListShowResponse) error {
 	return h.ShowHandler.ListShow(ctx, in, out)
 }
 
-func (h *showHandler) FindShowConnectedCinema(ctx context.Context, in *FindShowConnectedCinemaRequest, out *FindShowConnectedCinemaResponse) error {
-	return h.ShowHandler.FindShowConnectedCinema(ctx, in, out)
+func (h *showHandler) FindShowCinema(ctx context.Context, in *FindShowCinemaRequest, out *FindShowCinemaResponse) error {
+	return h.ShowHandler.FindShowCinema(ctx, in, out)
 }
 
-func (h *showHandler) FindShowConnectedMovie(ctx context.Context, in *FindShowConnectedMovieRequest, out *FindShowConnectedMovieResponse) error {
-	return h.ShowHandler.FindShowConnectedMovie(ctx, in, out)
+func (h *showHandler) FindShowCinema(ctx context.Context, in *FindShowCinemaRequest, out *FindShowCinemaResponse) error {
+	return h.ShowHandler.FindShowCinema(ctx, in, out)
 }
