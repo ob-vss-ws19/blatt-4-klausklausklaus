@@ -3,7 +3,6 @@ package cinemahall_test
 import (
 	"context"
 	"fmt"
-
 	"github.com/ob-vss-ws19/blatt-4-klausklausklaus/cinemahall/cinemahall"
 	cinemaprototest "github.com/ob-vss-ws19/blatt-4-klausklausklaus/cinemahall/proto"
 	"testing"
