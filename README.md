@@ -9,4 +9,6 @@
     go run users/main.go
 
 
-man kann auch alles services mit shell Skript ausführen startservices.sh
+Man kann auch alles services mit shell Skript ausführen startservices.sh
+
+Mit go run client.go kann ein Testprogramm gestartet werden.
