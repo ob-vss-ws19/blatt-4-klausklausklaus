@@ -14,6 +14,8 @@ const (
 	FirstName  = "Tim"
 	NewName    = "Paulanius"
 	SecondName = "Paulanius"
+	one        = 1
+	two        = 2
 )
 
 func TestAddUser(t *testing.T) {
@@ -24,7 +26,7 @@ func TestAddUser(t *testing.T) {
 		switch {
 		case response.User.Name != "Tim":
 			t.Errorf("Cannot create a user with the name %s", TestName)
-		case response.User.Userid < 1:
+		case response.User.Userid < one:
 			t.Fatal("Cannot create a user with a proper ID")
 		default:
 			t.Log("Creating a User will work.")
@@ -42,7 +44,7 @@ func TestGetInformationFromMap(t *testing.T) {
 	var id int32 = service.GetInformationFromMap("Tim").(int32)
 	if err == nil {
 		switch {
-		case id < 1:
+		case id < one:
 			t.Errorf("Got a wrong id back was smaller then 1! Was: %d", id)
 		case responseInsert.User.Userid != id:
 			t.Errorf("Cannot find a user with given ID --> Does not match up given with expected ID given %d, wanted %d", responseInsert.User.Userid, id)
@@ -90,7 +92,7 @@ func TestAddUserAndFindHim(t *testing.T) {
 		switch {
 		case responseFind.User.Name != "Tim":
 			t.Errorf("Cannot find or create a user with the name %s", TestName)
-		case responseFind.User.Userid < 1 || responseFind.User.Userid != vid:
+		case responseFind.User.Userid < one || responseFind.User.Userid != vid:
 			t.Errorf("Cannot find a user with given ID --> Does not match up given with expected ID given %d, wanted %d", vid, responseFind.User.Userid)
 		default:
 			t.Log("Can create a user and get him by his id.")
@@ -116,7 +118,7 @@ func TestAddUserAndFindHimByHisName(t *testing.T) {
 		switch {
 		case responseFind.User.Userid != vid:
 			t.Errorf("Cannot find or create a user with the name %s", TestName)
-		case responseFind.User.Userid < 1 || responseFind.User.Userid != vid:
+		case responseFind.User.Userid < one || responseFind.User.Userid != vid:
 			t.Errorf("Cannot find a user with given ID --> Does not match up given with expected ID given %d, wanted %d", vid, responseFind.User.Userid)
 		case responseFind.User.Name == "" || responseFind.User.Name != TestName:
 			t.Errorf("Cannot find a user with given Name --> Missing match given %s, wanted %s", responseFind.User.Name, TestName)
@@ -166,7 +168,7 @@ func TestAddMultipleUsersAndReadAllOfThem(t *testing.T) {
 
 	err2 := service.ReceiveAndSendAllUsers(context.TODO(), &protoo.AllUsersRequest{}, &all)
 	if err == nil && err1 == nil && err2 == nil {
-		if len(all.Users) != 2 {
+		if len(all.Users) != two {
 			t.Errorf("The length does not match up. expected %d got %d", 2, len(all.Users))
 		}
 	} else {

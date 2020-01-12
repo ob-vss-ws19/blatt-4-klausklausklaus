@@ -9,6 +9,11 @@ import (
 	res "github.com/ob-vss-ws19/blatt-4-klausklausklaus/reservation/reservation"
 )
 
+const (
+	userID = 23
+	showID = 34
+)
+
 /*
 Test to add a potantialreservation.
 */
@@ -16,11 +21,11 @@ func TestAddReservation(t *testing.T) {
 	re := res.CreateNewReservationHandlerInstance()
 	in := &proto.MakeReservationRequest{
 		Res: &proto.Reservation{
-			User: 23,
-			Show: 34,
+			User: userID,
+			Show: showID,
 			Seats: []*proto.Seat{
-				{Seat: 23},
-				{Seat: 34}},
+				{Seat: userID},
+				{Seat: showID}},
 		},
 	}
 	out := &proto.MakeReservationResponse{}
@@ -42,9 +47,9 @@ func TestAddAcceptReservation(t *testing.T) {
 	re := res.CreateNewReservationHandlerInstance()
 	in := &proto.MakeReservationRequest{
 		Res: &proto.Reservation{
-			User:  23,
-			Show:  34,
-			Seats: []*proto.Seat{{Seat: 23}, {Seat: 34}},
+			User:  userID,
+			Show:  showID,
+			Seats: []*proto.Seat{{Seat: userID}, {Seat: showID}},
 		},
 	}
 	out := &proto.MakeReservationResponse{}
@@ -76,9 +81,9 @@ func TestAddTroughAwayReservation(t *testing.T) {
 	re := res.CreateNewReservationHandlerInstance()
 	in := &proto.MakeReservationRequest{
 		Res: &proto.Reservation{
-			User:  23,
-			Show:  34,
-			Seats: []*proto.Seat{{Seat: 23}, {Seat: 34}},
+			User:  userID,
+			Show:  showID,
+			Seats: []*proto.Seat{{Seat: userID}, {Seat: showID}},
 		},
 	}
 	out := &proto.MakeReservationResponse{}
@@ -109,9 +114,9 @@ func TestAddErrorReservation(t *testing.T) {
 	re := res.CreateNewReservationHandlerInstance()
 	in := &proto.MakeReservationRequest{
 		Res: &proto.Reservation{
-			User:  23,
-			Show:  34,
-			Seats: []*proto.Seat{{Seat: 23}, {Seat: 34}},
+			User:  userID,
+			Show:  showID,
+			Seats: []*proto.Seat{{Seat: userID}, {Seat: showID}},
 		},
 	}
 	out := &proto.MakeReservationResponse{}
@@ -142,9 +147,9 @@ func TestAddAcceptAddAgainReservation(t *testing.T) {
 	re := res.CreateNewReservationHandlerInstance()
 	in := &proto.MakeReservationRequest{
 		Res: &proto.Reservation{
-			User:  23,
-			Show:  34,
-			Seats: []*proto.Seat{{Seat: 23}, {Seat: 34}},
+			User:  userID,
+			Show:  showID,
+			Seats: []*proto.Seat{{Seat: userID}, {Seat: showID}},
 		},
 	}
 	out := &proto.MakeReservationResponse{}
@@ -154,9 +159,9 @@ func TestAddAcceptAddAgainReservation(t *testing.T) {
 	err1 := re.AcceptReservation(context.TODO(), ina, outa)
 	in2 := &proto.MakeReservationRequest{
 		Res: &proto.Reservation{
-			User:  23,
-			Show:  34,
-			Seats: []*proto.Seat{{Seat: 23}, {Seat: 34}},
+			User:  userID,
+			Show:  showID,
+			Seats: []*proto.Seat{{Seat: userID}, {Seat: showID}},
 		},
 	}
 	out2 := &proto.MakeReservationResponse{}
@@ -188,9 +193,9 @@ func TestAddAcceptDeleteReservation(t *testing.T) {
 	re := res.CreateNewReservationHandlerInstance()
 	in := &proto.MakeReservationRequest{
 		Res: &proto.Reservation{
-			User:  23,
-			Show:  34,
-			Seats: []*proto.Seat{{Seat: 23}, {Seat: 34}},
+			User:  userID,
+			Show:  showID,
+			Seats: []*proto.Seat{{Seat: userID}, {Seat: showID}},
 		},
 	}
 	out := &proto.MakeReservationResponse{}
@@ -228,9 +233,9 @@ func TestAddAcceptFindReservation(t *testing.T) {
 	re := res.CreateNewReservationHandlerInstance()
 	in := &proto.MakeReservationRequest{
 		Res: &proto.Reservation{
-			User:  23,
-			Show:  34,
-			Seats: []*proto.Seat{{Seat: 23}, {Seat: 34}},
+			User:  userID,
+			Show:  showID,
+			Seats: []*proto.Seat{{Seat: userID}, {Seat: showID}},
 		},
 	}
 	out := &proto.MakeReservationResponse{}
@@ -248,10 +253,10 @@ func TestAddAcceptFindReservation(t *testing.T) {
 			t.Errorf("cannot add a potentialreservation into the map got ID: %d and Works: %t", out.TmpID, out.Works)
 		case outa.FinalID < 1 && !outa.Taken:
 			t.Errorf("Accepted responsed with the wrong answer: %d and Works: %t", outa.FinalID, outa.Taken)
-		case dout.Res.ResId < 1 || dout.Res.ResId != outa.FinalID || dout.Res.Show != 34 || dout.Res.Show < 1 || dout.Res.User != 23 || dout.Res.User < 1 || len(dout.Res.Seats) < 1 || len(dout.Res.Seats) != 2:
+		case dout.Res.ResId < 1 || dout.Res.ResId != outa.FinalID || dout.Res.Show != showID || dout.Res.Show < 1 || dout.Res.User != userID || dout.Res.User < 1 || len(dout.Res.Seats) < 1 || len(dout.Res.Seats) != 2:
 			t.Errorf("got the wrong answer back wanted-RES-ID: %d, got: %d", dout.Res.ResId, outa.FinalID)
-			t.Errorf("got the wrong answer back wanted-UserID: %d, got: %d", dout.Res.User, 23)
-			t.Errorf("got the wrong answer back wanted-ShowID: %d, got: %d", dout.Res.Show, 34)
+			t.Errorf("got the wrong answer back wanted-userID: %d, got: %d", dout.Res.User, userID)
+			t.Errorf("got the wrong answer back wanted-showID: %d, got: %d", dout.Res.Show, showID)
 			t.Errorf("got the wrong answer back wanted-Seats: %d, got: %d", len(dout.Res.Seats), 2)
 		default:
 			t.Log("test add the same reservation 2 times worked fine.")
@@ -270,15 +275,15 @@ func TestAddCheckHasReservationReservation(t *testing.T) {
 	re := res.CreateNewReservationHandlerInstance()
 	in := &proto.MakeReservationRequest{
 		Res: &proto.Reservation{
-			User:  23,
-			Show:  34,
-			Seats: []*proto.Seat{{Seat: 23}, {Seat: 34}},
+			User:  userID,
+			Show:  showID,
+			Seats: []*proto.Seat{{Seat: userID}, {Seat: showID}},
 		},
 	}
 	out := &proto.MakeReservationResponse{}
 	err := re.MakeReservation(context.TODO(), in, out)
 
-	fin := &proto.HasReservationsRequest{Res: &proto.Reservation{User: 23}}
+	fin := &proto.HasReservationsRequest{Res: &proto.Reservation{User: userID}}
 	fout := &proto.HasReservationsResponse{}
 
 	err1 := re.HasReservations(context.TODO(), fin, fout)
@@ -302,7 +307,7 @@ Test to add a potantialreservation and try to check whether a user has a reserva
 */
 func TestAddCheckHasReservationOnEmptyServiceReservation(t *testing.T) {
 	re := res.CreateNewReservationHandlerInstance()
-	fin := &proto.HasReservationsRequest{Res: &proto.Reservation{User: 23}}
+	fin := &proto.HasReservationsRequest{Res: &proto.Reservation{User: userID}}
 	fout := &proto.HasReservationsResponse{}
 
 	err := re.HasReservations(context.TODO(), fin, fout)
@@ -315,96 +320,5 @@ func TestAddCheckHasReservationOnEmptyServiceReservation(t *testing.T) {
 		}
 	} else {
 		fmt.Println(err)
-	}
-}
-
-/*
-Test to add a reservation and accepted it and stream it later on.
-*/
-func TestAddCheckStreamReservation(t *testing.T) {
-	re := res.CreateNewReservationHandlerInstance()
-	in := &proto.MakeReservationRequest{
-		Res: &proto.Reservation{
-			User:  23,
-			Show:  34,
-			Seats: []*proto.Seat{{Seat: 23}, {Seat: 34}},
-		},
-	}
-	out := &proto.MakeReservationResponse{}
-	err := re.MakeReservation(context.TODO(), in, out)
-	ina := &proto.AcceptReservationRequest{TmpID: out.TmpID, Want: true}
-	outa := &proto.AcceptReservationResponse{}
-	err1 := re.AcceptReservation(context.TODO(), ina, outa)
-
-	sin := &proto.StreamUsersReservationsRequest{}
-	sout := &proto.StreamUsersReservationsResponse{}
-
-	err2 := re.StreamUsersReservations(context.TODO(), sin, sout)
-	if err == nil && err1 == nil && err2 == nil {
-		switch {
-		case out.TmpID < 0 || !out.Works:
-			t.Errorf("cannot add a potentialreservation into the map got ID: %d and Works: %t", out.TmpID, out.Works)
-		case outa.FinalID < 1 && !outa.Taken:
-			t.Errorf("Accepted responsed with the wrong answer: %d and Works: %t", outa.FinalID, outa.Taken)
-		case len(sout.Reservations) < 1:
-			t.Errorf("The length of the answer and the expectation does not match up: %d and Works: %d", len(sout.Reservations), 1)
-		case (sout.Reservations[0]).User != 23 || (sout.Reservations[0]).Show != 34 || (sout.Reservations[0]).Seats[0].Seat != 23 || (sout.Reservations[0]).Seats[1].Seat != 34:
-			t.Errorf("The user got does not match up with the expected one: got %d wanted: %d", (sout.Reservations[0]).User, 23)
-			t.Errorf("The show got does not match up with the expected one: got %d wanted: %d", (sout.Reservations[0]).Show, 34)
-			t.Errorf("The seat 1 got does not match up with the expected one: got %d wanted: %d", (sout.Reservations[0]).Seats[0].Seat, 23)
-			t.Errorf("The seat 2 got does not match up with the expected one: got %d wanted: %d", (sout.Reservations[0]).Seats[1].Seat, 34)
-		default:
-			t.Log("test add the same reservation 2 times worked fine.")
-		}
-	} else {
-		fmt.Println(err)
-		fmt.Println(err1)
-		fmt.Println(err2)
-	}
-}
-
-/*
-Test to add a potantialreservation accepted it and change it.
-Result: First send, stored and accepted and changed.
-*/
-func TestAddAcceptChangeReservation(t *testing.T) {
-	re := res.CreateNewReservationHandlerInstance()
-	in := &proto.MakeReservationRequest{
-		Res: &proto.Reservation{
-			User:  23,
-			Show:  34,
-			Seats: []*proto.Seat{{Seat: 23}, {Seat: 34}},
-		},
-	}
-	out := &proto.MakeReservationResponse{}
-	err := re.MakeReservation(context.TODO(), in, out)
-	ina := &proto.AcceptReservationRequest{TmpID: out.TmpID, Want: true}
-	outa := &proto.AcceptReservationResponse{}
-	err1 := re.AcceptReservation(context.TODO(), ina, outa)
-
-	cin := &proto.ChangeReservationRequest{Res: &proto.Reservation{
-		ResId: outa.FinalID,
-		User:  23,
-		Show:  33,
-		Seats: []*proto.Seat{{Seat: 23}, {Seat: 34}},
-	}}
-	cout := &proto.ChangeReservationResponse{}
-
-	err2 := re.ChangeReservation(context.TODO(), cin, cout)
-	if err == nil && err1 == nil && err2 == nil {
-		switch {
-		case out.TmpID < 0 || !out.Works:
-			t.Errorf("cannot add a potentialreservation into the map got ID: %d and Works: %t", out.TmpID, out.Works)
-		case outa.FinalID < 1 && !outa.Taken:
-			t.Errorf("Accepted responsed with the wrong answer: %d and Works: %t", outa.FinalID, outa.Taken)
-		case !cout.Changed:
-			t.Errorf("The value did not changed --> Got %t", cout.Changed)
-		default:
-			t.Log("test add the same reservation 2 times worked fine.")
-		}
-	} else {
-		fmt.Println(err)
-		fmt.Println(err1)
-		fmt.Println(err2)
 	}
 }

@@ -84,7 +84,6 @@ func (m *MovieHandlerService) change(id int32, pname string) bool {
 	return false
 }
 
-
 func (m *MovieHandlerService) StreamMovie(ctx context.Context, in *proto.StreamMovieRequest, out *proto.StreamMovieResponse) error {
 	if len(*m.getMoviesMap()) > 0 {
 		movies := []*proto.Movie{}

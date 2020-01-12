@@ -12,6 +12,10 @@ import (
 	showproto "github.com/ob-vss-ws19/blatt-4-klausklausklaus/show/proto"
 )
 
+const (
+	randomID = 91734628
+)
+
 /*
 containsID will check whether generated ID is already set or not.
 @id will be a int32 id to check for.
@@ -135,7 +139,7 @@ func (r *ReservatServiceHandler) addInReservationsMap(id int32, reserve Reservat
 
 func (r *ReservatServiceHandler) makePotentialReservation(seats []*proto.Seat, userid, showid int32) (bool, int32) {
 	seat := convertSeats(seats)
-	id := r.getRandomReservationsID(91734628)
+	id := r.getRandomReservationsID(randomID)
 	if added := r.addInReservationsMap(id, Reservation{
 		UserID: userid,
 		ShowID: showid,
@@ -187,7 +191,7 @@ func (r *ReservatServiceHandler) convertSeatsToCinemaHallSeats(ctx context.Conte
 	return int32(-1), int32(-1)
 }
 
-func (r *ReservatServiceHandler) makeSeatsCinemaHallSeats(context context.Context, id int32, cinema *protocin.SizeResponse) *[]*protocin.SeatMessage {
+func (r *ReservatServiceHandler) makeSeatsCinemaHallSeats(context context.Context, id int32) *[]*protocin.SeatMessage {
 	seats := []*protocin.SeatMessage{}
 	if r.containsPotantialReservations(id) {
 		for _, v := range (*r.getPotantialReservationsMap())[id].Seats {
@@ -210,12 +214,8 @@ func (r *ReservatServiceHandler) AcceptReservation(ctx context.Context, in *prot
 			seats    *[]*protocin.SeatMessage
 			cinin    *protocin.ReservationRequest
 		)
-		response, err := moviehandler.ListShow(ctx, &showproto.ListShowRequest{})
-		if err != nil {
-			fmt.Println(response)
-			fmt.Println(err)
-			fmt.Println("there is an error while accepting a reservation")
-		}
+		response, _ := moviehandler.ListShow(ctx, &showproto.ListShowRequest{})
+
 		for k, v := range response.ShowId {
 			if v == (*r.getPotantialReservationsMap())[in.TmpID].ShowID {
 				cinemaid = response.AllShowsData[k].CinemaId
@@ -227,9 +227,9 @@ func (r *ReservatServiceHandler) AcceptReservation(ctx context.Context, in *prot
 		}
 		if cinemaid > 0 {
 			inSize := &protocin.SizeRequest{Id: cinemaid}
-			size, err := service.GetSizeOfCinema(ctx, inSize)
+			_, err := service.GetSizeOfCinema(ctx, inSize)
 			if err == nil {
-				seats = r.makeSeatsCinemaHallSeats(ctx, in.TmpID, size)
+				seats = r.makeSeatsCinemaHallSeats(ctx, in.TmpID)
 				cinin = &protocin.ReservationRequest{Id: cinemaid, Seatreservation: *seats}
 			} else {
 				fmt.Printf("cannot find a Cinema with the given id %d, Error: %e \n", cinemaid, err)
@@ -260,14 +260,12 @@ func (r *ReservatServiceHandler) AcceptReservation(ctx context.Context, in *prot
 	}
 }
 
-func (r *ReservatServiceHandler) rdelete(id int32) bool {
+func (r *ReservatServiceHandler) rdelete(id int32) {
 	if r.containsID(id) {
 		r.mutex.Lock()
 		delete(*r.getReservationsMap(), id)
 		r.mutex.Unlock()
-		return true
 	}
-	return false
 }
 
 func (r *ReservatServiceHandler) DeleteReservationByShowID(ctx context.Context, showID int32) {

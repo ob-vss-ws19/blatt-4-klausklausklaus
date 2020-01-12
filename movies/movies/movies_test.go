@@ -9,6 +9,14 @@ import (
 	protoo "github.com/ob-vss-ws19/blatt-4-klausklausklaus/movies/proto"
 )
 
+const (
+	RowValue    = 5
+	ColumnValue = 5
+	one         = 1
+	invalid     = -1
+	movieLen    = 2
+)
+
 /*
 TestAddMovie will be a testcase for adding movies into the service.
 */
@@ -22,7 +30,7 @@ func TestAddMovie(t *testing.T) {
 		switch {
 		case response.Movie.Name != TestName:
 			t.Errorf("Cannot create a movie with the name %s", TestName)
-		case response.Movie.Id < 1:
+		case response.Movie.Id < one:
 			t.Fatal("Cannot create a movie with a proper ID")
 		default:
 			t.Log("Creating a movie will work.")
@@ -49,7 +57,7 @@ func TestAddMultipleMoviesAndReadAllOfThem(t *testing.T) {
 	err2 := service.StreamMovie(context.TODO(), &protoo.StreamMovieRequest{}, &all)
 
 	if err == nil && err1 == nil && err2 == nil {
-		if len(all.Movies) != 2 {
+		if len(all.Movies) != movieLen {
 			t.Errorf("The length does not match up. expected %d got %d", 2, len(all.Movies))
 		}
 	} else {
@@ -76,7 +84,7 @@ func TestAddandDeleteAMovie(t *testing.T) {
 	err2 := service.FindMovie(context.TODO(), &protoo.FindMovieRequest{Movie: &protoo.Movie{}}, &responseFind)
 
 	if err == nil && err1 == nil && err2 == nil {
-		if !deleteResponse.Deleted && responseFind.Movie.Id == -1 {
+		if !deleteResponse.Deleted && responseFind.Movie.Id == invalid {
 			t.Errorf("Movie was deleted. But returned the false state.")
 		} else {
 			t.Log("Create a movie and change him later on is fine.")
@@ -106,7 +114,7 @@ func TestAddMovieAndFindIt(t *testing.T) {
 		switch {
 		case responseFind.Movie.Id != id:
 			t.Errorf("Cannot find or create a movie with the name %s --> ID does not match given %d want %d", TestName, responseFind.Movie.Id, id)
-		case responseFind.Movie.Id < 1 || responseFind.Movie.Id != id:
+		case responseFind.Movie.Id < one || responseFind.Movie.Id != id:
 			t.Errorf("Cannot find a movie with given ID --> Does not match up given with expected ID given %d, wanted %d", id, responseFind.Movie.Id)
 		case responseFind.Movie.Name == "" || responseFind.Movie.Name != TestName:
 			t.Errorf("Cannot find a movie with given Name --> Missing match given %s, wanted %s", responseFind.Movie.Name, TestName)
