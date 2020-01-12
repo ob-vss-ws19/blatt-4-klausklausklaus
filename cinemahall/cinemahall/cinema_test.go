@@ -124,26 +124,4 @@ func TestCheckSeats(t *testing.T) {
 	}
 }
 
-func TestFreeSeats(t *testing.T) {
-	TestName := "C1"
-	service := cinemahall.NewCinemaPool()
-	response := cinemaprototest.CreateCinemaResponse{}
-	err := service.Create(context.TODO(), &cinemaprototest.CreateCinemaRequest{Name: TestName, Row:RowValue, Column: ColumnValue}, &response)
-	responseReservation := cinemaprototest.ReservationResponse{}
-	x := []*cinemaprototest.SeatMessage{}
-	x = append(x, &cinemaprototest.SeatMessage{Row: 1, Column: 1})
-	err1 := service.Reservation(context.TODO(), &cinemaprototest.ReservationRequest{Id: response.Id, Seatreservation: x}, &responseReservation)
-	responseFreeSeats := cinemaprototest.FreeSeatsResponse{}
-	err2 := service.FreeSeats(context.TODO(), &cinemaprototest.FreeSeatsRequest{Id: response.Id}, &responseFreeSeats)
-	if err == nil && err1 == nil && err2 == nil {
-		if len(responseFreeSeats.Freeseats) != 3 {
-			t.Errorf("FreeSeats failed; len: %d", len(responseFreeSeats.Freeseats))
-		} else {
-			t.Log("FreeSeats will work in a cinema .")
-		}
-	} else {
-		fmt.Println(err)
-		fmt.Println(err1)
-		fmt.Println(err2)
-	}
-}
+
