@@ -10,11 +10,9 @@ import (
 	show "github.com/ob-vss-ws19/blatt-4-klausklausklaus/show/show"
 )
 
-const serviceName = "show"
-
 func main() {
 	service := micro.NewService(
-		micro.Name(serviceName),
+		micro.Name("show"),
 	)
 	service.Init()
 

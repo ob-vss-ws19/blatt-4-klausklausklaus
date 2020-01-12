@@ -65,17 +65,20 @@ func (handler *ShowPool) getRandomShowID() int32 {
 }
 
 /*
-CreateShow will create a show, combining a cinema with a movie.
+CreateShow creates a show, that links  a cinema with a movie.
 */
 func (handler *ShowPool) CreateShow(ctx context.Context, request *showproto.CreateShowRequest, response *showproto.CreateShowResponse) error {
+
 	if request.CreateData.CinemaId > 0 && request.CreateData.MovieId > 0 {
 		createid := handler.getRandomShowID()
+
 		handler.mutex.Lock()
 		handler.showmap[createid] = &show{
 			cinemaID: int(request.CreateData.CinemaId),
 			movieID:  int(request.CreateData.MovieId),
 		}
 		handler.mutex.Unlock()
+
 		response.CreateShowId = createid
 		return nil
 	}
@@ -83,7 +86,7 @@ func (handler *ShowPool) CreateShow(ctx context.Context, request *showproto.Crea
 }
 
 /*
-DeleteShow will delete one show(id) from the cinemapool.
+DeleteShow  deletes one show from the cinemapool.
 */
 func (handler *ShowPool) DeleteShow(ctx context.Context, request *showproto.DeleteShowRequest, response *showproto.DeleteShowResponse) error {
 	if request.DeleteShowId > 0 && handler.containsshow(request.DeleteShowId) {
@@ -97,7 +100,7 @@ func (handler *ShowPool) DeleteShow(ctx context.Context, request *showproto.Dele
 }
 
 /*
-DeleteShowConnectedCinema will delete all shows connected to a cinema.
+DeleteShowConnectedCinema  deletes all shows linked to a cinema.
 */
 func (handler *ShowPool) DeleteShowConnectedCinema(ctx context.Context, request *showproto.DeleteShowConnectedCinemaRequest, response *showproto.DeleteShowConnectedCinemaResponse) error {
 	if request.CinemaId > 0 {
@@ -119,14 +122,14 @@ func (handler *ShowPool) DeleteShowConnectedCinema(ctx context.Context, request 
 }
 
 /*
-AddDependency will add a dependency into the service.
+AddDependency adds a dependency into the service.
 */
 func (handler *ShowPool) AddDependency(dep *SServiceDependency) {
 	handler.dependency = dep
 }
 
 /*
-deleteReservation will send a delete request to the reservation service.
+deleteReservation sends a delete request to the reservation service.
 */
 func (handler *ShowPool) deleteReservations(context context.Context, todelete int32) {
 	service := handler.dependency.ReservationService()
@@ -161,7 +164,7 @@ func (handler *ShowPool) DeleteShowConnectedMovie(ctx context.Context, request *
 }
 
 /*
-ListShow will show all shows currently available in cinemapool.
+ListShow shows all shows currently available in cinemapool.
 */
 func (handler *ShowPool) ListShow(ctx context.Context, request *showproto.ListShowRequest, response *showproto.ListShowResponse) error {
 	responseID := []int32{}
@@ -178,7 +181,7 @@ func (handler *ShowPool) ListShow(ctx context.Context, request *showproto.ListSh
 }
 
 /*
-FindShowConnectedCinema will show all shows connected to a cinema.
+FindShowConnectedCinema shows all shows connected to a cinema.
 */
 func (handler *ShowPool) FindShowConnectedCinema(ctx context.Context, request *showproto.FindShowConnectedCinemaRequest, response *showproto.FindShowConnectedCinemaResponse) error {
 	if request.CinemaId > 0 {
@@ -199,9 +202,6 @@ func (handler *ShowPool) FindShowConnectedCinema(ctx context.Context, request *s
 	return fmt.Errorf("cannot find show with cinemaID: %d", request.CinemaId)
 }
 
-/*
-FindShowConnectedMovie will show all shows connected to a movie. ++
-*/
 func (handler *ShowPool) FindShowConnectedMovie(ctx context.Context, request *showproto.FindShowConnectedMovieRequest, response *showproto.FindShowConnectedMovieResponse) error {
 	if request.MovieId > 0 {
 		responseData := []*showproto.ShowMessage{}
