@@ -15,26 +15,28 @@ import (
 )
 
 func main() {
+	
 	fmt.Println("Start Test Skript")
 	clientService := micro.NewService(micro.Name("Client"))
 	clientService.Init()
 
-	fmt.Println("Creating 5 Movies")
-	_, moviearray := createTestMovies(clientService)
-
-	fmt.Println("Creating 3 Cinemas")
+	fmt.Println("Creating 3 Cinemas ...")
 	cinemaService, cinemaarray := createTestCinemas(clientService)
 
-	fmt.Println("Creating 3 Shows")
+	fmt.Println("Creating 5 Movies ...")
+	_, moviearray := createTestMovies(clientService)
+
+
+	fmt.Println("Creating 3 Shows ...")
 	showService, showarray := createTestShows(clientService, moviearray, cinemaarray)
 
-	fmt.Println("Creating 6 Users")
+	fmt.Println("Creating 6 Users ...")
 	_, userarray := createTestUsers(clientService)
 
-	fmt.Println("Creating Reservation")
+	fmt.Println("Creating Reservation ...")
 	reservationService, _ := createTestReservations(clientService, showarray, userarray)
 
-	fmt.Println("Start Scenario 1")
+	fmt.Println("Start Scenario 1 :")
 
 	fmt.Printf("Delete Cinema with id: %d\n", cinemaarray[2])
 	response, err := cinemaService.Delete(context.TODO(), &cinemaprot.DeleteCinemaRequest{Id: cinemaarray[2]})
@@ -60,22 +62,22 @@ func main() {
 	if err2 != nil {
 		fmt.Println(err1)
 	}
-	//list all reservations
+
 	for k := range response2.Reservations {
 		println("ReservationID: " + strconv.Itoa(int(response2.Reservations[k].ResId)) + " Show " + strconv.Itoa(int(response2.Reservations[k].Show)) + " User " + strconv.Itoa(int(response2.Reservations[k].User)))
 		for i := range response2.Reservations[k].Seats {
 			println("Seat: " + strconv.Itoa(int(response2.Reservations[k].Seats[i].Seat)))
 		}
 	}
-	fmt.Println("Start Scenario 2")
+	fmt.Println("Start Scenario 2 : ")
 	var wg sync.WaitGroup
 	wg.Add(2)
-	go scen2(reservationService, &wg, 0, showarray, userarray)
-	go scen2(reservationService, &wg, 1, showarray, userarray)
+	go scene2(reservationService, &wg, 0, showarray, userarray)
+	go scene2(reservationService, &wg, 1, showarray, userarray)
 	wg.Wait()
 }
 
-func scen2(reservationService reservationprot.ReservationService, wg *sync.WaitGroup, user int32, showarray, userarray []int32) {
+func scene2(reservationService reservationprot.ReservationService, wg *sync.WaitGroup, user int32, showarray, userarray []int32) {
 	seats := []*reservationprot.Seat{}
 	seats = append(seats, &reservationprot.Seat{Seat: 5})
 	response3, err3 := reservationService.MakeReservation(context.TODO(), &reservationprot.MakeReservationRequest{Res: &reservationprot.Reservation{
