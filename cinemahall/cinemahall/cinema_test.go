@@ -3,21 +3,21 @@ package cinemahall_test
 import (
 	"context"
 	"fmt"
-	"testing"
-
 	"github.com/ob-vss-ws19/blatt-4-klausklausklaus/cinemahall/cinemahall"
 	cinemaprototest "github.com/ob-vss-ws19/blatt-4-klausklausklaus/cinemahall/proto"
+	"testing"
 )
+
 const (
-	RowValue = 5
+	RowValue    = 5
 	ColumnValue = 5
-	one = 1
+	one         = 1
 )
 
 func TestDelete(t *testing.T) {
 	TestName := "C1"
 	service := cinemahall.NewCinemaPool()
-	
+
 	response := cinemaprototest.CreateCinemaResponse{}
 	err := service.Create(context.TODO(), &cinemaprototest.CreateCinemaRequest{Name: TestName, Row: RowValue, Column: ColumnValue}, &response)
 	responseDelete := cinemaprototest.DeleteCinemaResponse{}
@@ -130,5 +130,3 @@ func TestCheckSeats(t *testing.T) {
 		fmt.Println(err2)
 	}
 }
-
-
