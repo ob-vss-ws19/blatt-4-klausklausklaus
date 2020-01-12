@@ -1,11 +1,13 @@
-# Dockerfile for the show-services
+# Dockerfile for the movies-services
 
 FROM obraun/vss-protoactor-jenkins as builder
 COPY . /app
-WORKDIR /app/show
- 
-RUN go build -o show main.go
+WORKDIR /app
 
-FROM iron/go
+ENV GO111MODULE on
+
+RUN go get github.com/ob-vss-ws19/blatt-4-klausklausklaus@blatt4
+RUN cp -rf /go/pkg/mod/github.com/ob-vss-ws19/blatt-4-klausklausklaus* /go/pkg/mod/github.com/ob-vss-ws19/blatt-4-klausklausklaus@v0.0.0-20200112113748-89d90ddce3df
+
 EXPOSE 8200
-ENTRYPOINT ["/app/show"]
+CMD go run main.go
