@@ -457,7 +457,7 @@ func (m *ListShowResponse) GetAllShowsData() []*ShowMessage {
 	return nil
 }
 
-type FindShowMovie struct {
+type FindShowMovieRequest struct {
 	MovieId              int32    `protobuf:"varint,1,opt,name=movieId,proto3" json:"movieId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -471,47 +471,47 @@ func (*FindShowMovieRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_67e145b6e6608d39, []int{11}
 }
 
-func (m *FindShowCinemaRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_FindShowCinemaRequest.Unmarshal(m, b)
+func (m *FindShowMovieRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_FindShowMovieRequest.Unmarshal(m, b)
 }
-func (m *FindShowCinemaRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_FindShowCinemaRequest.Marshal(b, m, deterministic)
+func (m *FindShowMovieRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_FindShowMovieRequest.Marshal(b, m, deterministic)
 }
-func (m *FindShowCinemaRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_FindShowCinemaRequest.Merge(m, src)
+func (m *FindShowMovieRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FindShowMovieRequest.Merge(m, src)
 }
-func (m *FindShowCinemaRequest) XXX_Size() int {
-	return xxx_messageInfo_FindShowCinemaRequest.Size(m)
+func (m *FindShowMovieRequest) XXX_Size() int {
+	return xxx_messageInfo_FindShowMovieRequest.Size(m)
 }
-func (m *FindShowCinemaRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_FindShowCinemaRequest.DiscardUnknown(m)
+func (m *FindShowMovieRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_FindShowMovieRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_FindShowCinemaRequest proto.InternalMessageInfo
+var xxx_messageInfo_FindShowMovieRequest proto.InternalMessageInfo
 
-func (m *FindShowCinemaRequest) GetMovieId() int32 {
+func (m *FindShowMovieRequest) GetMovieId() int32 {
 	if m != nil {
 		return m.MovieId
 	}
 	return 0
 }
 
-type FindShowCinemaResponse struct {
+type FindShowMovieResponse struct {
 	MovieData            []*ShowMessage `protobuf:"bytes,1,rep,name=movieData,proto3" json:"movieData,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *FindShowCinemaResponse) Reset()         { *m = FindShowCinemaResponse{} }
-func (m *FindShowCinemaResponse) String() string { return proto.CompactTextString(m) }
-func (*FindShowCinemaResponse) ProtoMessage()    {}
-func (*FindShowCinemaResponse) Descriptor() ([]byte, []int) {
+func (m *FindShowMovieResponse) Reset()         { *m = FindShowMovieResponse{} }
+func (m *FindShowMovieResponse) String() string { return proto.CompactTextString(m) }
+func (*FindShowMovieResponse) ProtoMessage()    {}
+func (*FindShowMovieResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_67e145b6e6608d39, []int{12}
 }
 
-func (m *FindShowCinemaResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_FindShowCinemaResponse.Unmarshal(m, b)
+func (m *FindShowMovieResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_FindShowMovieResponse.Unmarshal(m, b)
 }
 func (m *FindShowCinemaResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_FindShowCinemaResponse.Marshal(b, m, deterministic)
