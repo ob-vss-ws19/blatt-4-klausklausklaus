@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/ob-vss-ws19/blatt-4-pwn2own/movies/movies"
-	protoo "github.com/ob-vss-ws19/blatt-4-pwn2own/movies/proto"
+	"github.com/ob-vss-ws19/blatt-4-klausklausklaus/movies/movies"
+	protoo "github.com/ob-vss-ws19/blatt-4-klausklausklaus/movies/proto"
 )
 
 /*
