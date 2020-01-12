@@ -20,7 +20,7 @@ service Show {
     rpc FindShowCinema (FindShowCinemaRequest) returns (FindShowCinemaResponse) {
     }
 
-    rpc FindShowCinema (FindShowCinemaRequest) returns (FindShowCinemaResponse) {
+    rpc FindShowMovie (FindShowMovieRequest) returns (FindShowMovieResponse) {
     }
 }
 
@@ -69,11 +69,11 @@ message ListShowResponse {
     repeated ShowMessage allShowsData = 2;
 }
 
-message FindShowCinemaRequest {
+message FindShowMovieRequest {
     int32 movieId = 1;
 }
 
-message FindShowCinemaResponse {
+message FindShowMovieResponse {
     repeated ShowMessage movieData = 1;
 }
 
