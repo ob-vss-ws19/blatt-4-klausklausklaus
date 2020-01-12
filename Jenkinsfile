@@ -24,21 +24,9 @@ pipeline {
                 //sh 'cd reservation/reservation && go test -cover'
                 sh 'cd show/show && go test -cover'
                 sh 'cd users/users && go test -cover'
-            }
-        }
-        stage('Lint') {
-            agent {
-                docker { image 'obraun/vss-protoactor-jenkins' }
-            }
-            steps {
-                //--deadline 20m --enable-all; --disable-all -E errcheck
-                sh 'cd cinemahall && golangci-lint run --enable-all --skip-dirs proto -D wsl -D lll' 
-                sh 'cd movies && golangci-lint run --enable-all --skip-dirs proto -D wsl -D lll -D gosimple' 
-                sh 'cd reservation && golangci-lint run --enable-all --skip-dirs proto -D wsl -D lll -D funlen -D unparam'
-                sh 'cd show && golangci-lint run --enable-all --skip-dirs proto -D wsl -D lll -D golint'
-                sh 'cd users && golangci-lint run --enable-all --skip-dirs proto -D wsl -D lll'
-            }
-        }
+        
+		}
+	}
         stage('Build Docker Image') {
             agent any
             steps {
