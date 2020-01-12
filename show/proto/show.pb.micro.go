@@ -151,7 +151,7 @@ func RegisterShowHandler(s server.Server, hdlr ShowHandler, opts ...server.Handl
 		DeleteShowMovie(ctx context.Context, in *DeleteShowMovieRequest, out *DeleteShowMovieResponse) error
 		ListShow(ctx context.Context, in *ListShowRequest, out *ListShowResponse) error
 		FindShowCinema(ctx context.Context, in *FindShowCinemaRequest, out *FindShowCinemaResponse) error
-		FindShowMovie(ctx context.Context, in *FindShowMovieRequest, out *FindShowCinemaResponse) error
+		FindShowMovie(ctx context.Context, in *FindShowMovieRequest, out *FindShowMovieResponse) error
 	}
 	type Show struct {
 		show
