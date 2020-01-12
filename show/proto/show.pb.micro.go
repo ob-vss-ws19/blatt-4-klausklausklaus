@@ -40,7 +40,7 @@ type ShowService interface {
 	DeleteShowMovie(ctx context.Context, in *DeleteShowMovieRequest, opts ...client.CallOption) (*DeleteShowMovieResponse, error)
 	ListShow(ctx context.Context, in *ListShowRequest, opts ...client.CallOption) (*ListShowResponse, error)
 	FindShowCinema(ctx context.Context, in *FindShowCinemaRequest, opts ...client.CallOption) (*FindShowCinemaResponse, error)
-	FindShowCinema(ctx context.Context, in *FindShowCinemaRequest, opts ...client.CallOption) (*FindShowCinemaResponse, error)
+	FindShowMovie(ctx context.Context, in *FindShowMovieRequest, opts ...client.CallOption) (*FindShowMovieResponse, error)
 }
 
 type showService struct {
@@ -121,9 +121,9 @@ func (c *showService) FindShowCinema(ctx context.Context, in *FindShowCinemaRequ
 	return out, nil
 }
 
-func (c *showService) FindShowCinema(ctx context.Context, in *FindShowCinemaRequest, opts ...client.CallOption) (*FindShowCinemaResponse, error) {
-	req := c.c.NewRequest(c.name, "Show.FindShowCinema", in)
-	out := new(FindShowCinemaResponse)
+func (c *showService) FindShowMovie(ctx context.Context, in *FindShowMovieRequest, opts ...client.CallOption) (*FindShowMovieResponse, error) {
+	req := c.c.NewRequest(c.name, "Show.FindShowMovie", in)
+	out := new(FindShowMovieResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -140,7 +140,7 @@ type ShowHandler interface {
 	DeleteShowMovie(context.Context, *DeleteShowMovieRequest, *DeleteShowMovieResponse) error
 	ListShow(context.Context, *ListShowRequest, *ListShowResponse) error
 	FindShowCinema(context.Context, *FindShowCinemaRequest, *FindShowCinemaResponse) error
-	FindShowCinema(context.Context, *FindShowCinemaRequest, *FindShowCinemaResponse) error
+	FindShowMovie(context.Context, *FindShowMovieRequest, *FindShowMovieResponse) error
 }
 
 func RegisterShowHandler(s server.Server, hdlr ShowHandler, opts ...server.HandlerOption) error {
@@ -151,7 +151,7 @@ func RegisterShowHandler(s server.Server, hdlr ShowHandler, opts ...server.Handl
 		DeleteShowMovie(ctx context.Context, in *DeleteShowMovieRequest, out *DeleteShowMovieResponse) error
 		ListShow(ctx context.Context, in *ListShowRequest, out *ListShowResponse) error
 		FindShowCinema(ctx context.Context, in *FindShowCinemaRequest, out *FindShowCinemaResponse) error
-		FindShowCinema(ctx context.Context, in *FindShowCinemaRequest, out *FindShowCinemaResponse) error
+		FindShowMovie(ctx context.Context, in *FindShowMovieRequest, out *FindShowCinemaResponse) error
 	}
 	type Show struct {
 		show
@@ -188,6 +188,6 @@ func (h *showHandler) FindShowCinema(ctx context.Context, in *FindShowCinemaRequ
 	return h.ShowHandler.FindShowCinema(ctx, in, out)
 }
 
-func (h *showHandler) FindShowCinema(ctx context.Context, in *FindShowCinemaRequest, out *FindShowCinemaResponse) error {
-	return h.ShowHandler.FindShowCinema(ctx, in, out)
+func (h *showHandler) FindShowMovie(ctx context.Context, in *FindShowMovieRequest, out *FindShowMovieResponse) error {
+	return h.ShowHandler.FindShowMovie(ctx, in, out)
 }
