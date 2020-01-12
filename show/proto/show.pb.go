@@ -633,8 +633,8 @@ func init() {
 	proto.RegisterType((*DeleteShowMovieResponse)(nil), "showproto.DeleteShowMovieResponse")
 	proto.RegisterType((*ListShowRequest)(nil), "showproto.ListShowRequest")
 	proto.RegisterType((*ListShowResponse)(nil), "showproto.ListShowResponse")
-	proto.RegisterType((*FindShowCinemaRequest)(nil), "showproto.FindShowCinemaRequest")
-	proto.RegisterType((*FindShowCinemaResponse)(nil), "showproto.FindShowCinemaResponse")
+	proto.RegisterType((*FindShowMovieRequest)(nil), "showproto.FindShowMovieRequest")
+	proto.RegisterType((*FindShowMovieResponse)(nil), "showproto.FindShowMovieResponse")
 	proto.RegisterType((*FindShowCinemaRequest)(nil), "showproto.FindShowCinemaRequest")
 	proto.RegisterType((*FindShowCinemaResponse)(nil), "showproto.FindShowCinemaResponse")
 }
