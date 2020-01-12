@@ -100,9 +100,9 @@ func (handler *ShowPool) DeleteShow(ctx context.Context, request *showproto.Dele
 }
 
 /*
-DeleteShowConnectedCinema  deletes all shows linked to a cinema.
+DeleteShowCinema  deletes all shows linked to a cinema.
 */
-func (handler *ShowPool) DeleteShowConnectedCinema(ctx context.Context, request *showproto.DeleteShowConnectedCinemaRequest, response *showproto.DeleteShowConnectedCinemaResponse) error {
+func (handler *ShowPool) DeleteShowCinema(ctx context.Context, request *showproto.DeleteShowCinemaRequest, response *showproto.DeleteShowCinemaResponse) error {
 	if request.CinemaId > 0 {
 		handler.mutex.Lock()
 		success := false

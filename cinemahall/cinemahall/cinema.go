@@ -145,8 +145,8 @@ DeleteShows will delete a show incase a cienma will be deleted.
 func (handler *CinemaPool) DeleteShows(ctx context.Context, cinemaid int32) {
 	if handler.containscinema(cinemaid) {
 		service := handler.dependency.ShowService()
-		in := &showproto.DeleteShowConnectedCinemaRequest{CinemaId: cinemaid}
-		res, err := service.DeleteShowConnectedCinema(ctx, in)
+		in := &showproto.DeleteShowCinemaRequest{CinemaId: cinemaid}
+		res, err := service.DeleteShowCinema(ctx, in)
 		if err != nil && res.Answer {
 			fmt.Printf("All shows are deleted for the Cinema %d", cinemaid)
 		}

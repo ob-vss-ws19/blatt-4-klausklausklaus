@@ -36,7 +36,7 @@ var _ server.Option
 type ShowService interface {
 	CreateShow(ctx context.Context, in *CreateShowRequest, opts ...client.CallOption) (*CreateShowResponse, error)
 	DeleteShow(ctx context.Context, in *DeleteShowRequest, opts ...client.CallOption) (*DeleteShowResponse, error)
-	DeleteShowConnectedCinema(ctx context.Context, in *DeleteShowConnectedCinemaRequest, opts ...client.CallOption) (*DeleteShowConnectedCinemaResponse, error)
+	DeleteShowCinema(ctx context.Context, in *DeleteShowCinemaRequest, opts ...client.CallOption) (*DeleteShowCinemaResponse, error)
 	DeleteShowConnectedMovie(ctx context.Context, in *DeleteShowConnectedMovieRequest, opts ...client.CallOption) (*DeleteShowConnectedMovieResponse, error)
 	ListShow(ctx context.Context, in *ListShowRequest, opts ...client.CallOption) (*ListShowResponse, error)
 	FindShowConnectedCinema(ctx context.Context, in *FindShowConnectedCinemaRequest, opts ...client.CallOption) (*FindShowConnectedCinemaResponse, error)
@@ -81,9 +81,9 @@ func (c *showService) DeleteShow(ctx context.Context, in *DeleteShowRequest, opt
 	return out, nil
 }
 
-func (c *showService) DeleteShowConnectedCinema(ctx context.Context, in *DeleteShowConnectedCinemaRequest, opts ...client.CallOption) (*DeleteShowConnectedCinemaResponse, error) {
-	req := c.c.NewRequest(c.name, "Show.DeleteShowConnectedCinema", in)
-	out := new(DeleteShowConnectedCinemaResponse)
+func (c *showService) DeleteShowCinema(ctx context.Context, in *DeleteShowCinemaRequest, opts ...client.CallOption) (*DeleteShowCinemaResponse, error) {
+	req := c.c.NewRequest(c.name, "Show.DeleteShowCinema", in)
+	out := new(DeleteShowCinemaResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -136,7 +136,7 @@ func (c *showService) FindShowConnectedMovie(ctx context.Context, in *FindShowCo
 type ShowHandler interface {
 	CreateShow(context.Context, *CreateShowRequest, *CreateShowResponse) error
 	DeleteShow(context.Context, *DeleteShowRequest, *DeleteShowResponse) error
-	DeleteShowConnectedCinema(context.Context, *DeleteShowConnectedCinemaRequest, *DeleteShowConnectedCinemaResponse) error
+	DeleteShowCinema(context.Context, *DeleteShowCinemaRequest, *DeleteShowCinemaResponse) error
 	DeleteShowConnectedMovie(context.Context, *DeleteShowConnectedMovieRequest, *DeleteShowConnectedMovieResponse) error
 	ListShow(context.Context, *ListShowRequest, *ListShowResponse) error
 	FindShowConnectedCinema(context.Context, *FindShowConnectedCinemaRequest, *FindShowConnectedCinemaResponse) error
@@ -147,7 +147,7 @@ func RegisterShowHandler(s server.Server, hdlr ShowHandler, opts ...server.Handl
 	type show interface {
 		CreateShow(ctx context.Context, in *CreateShowRequest, out *CreateShowResponse) error
 		DeleteShow(ctx context.Context, in *DeleteShowRequest, out *DeleteShowResponse) error
-		DeleteShowConnectedCinema(ctx context.Context, in *DeleteShowConnectedCinemaRequest, out *DeleteShowConnectedCinemaResponse) error
+		DeleteShowCinema(ctx context.Context, in *DeleteShowCinemaRequest, out *DeleteShowCinemaResponse) error
 		DeleteShowConnectedMovie(ctx context.Context, in *DeleteShowConnectedMovieRequest, out *DeleteShowConnectedMovieResponse) error
 		ListShow(ctx context.Context, in *ListShowRequest, out *ListShowResponse) error
 		FindShowConnectedCinema(ctx context.Context, in *FindShowConnectedCinemaRequest, out *FindShowConnectedCinemaResponse) error
@@ -172,8 +172,8 @@ func (h *showHandler) DeleteShow(ctx context.Context, in *DeleteShowRequest, out
 	return h.ShowHandler.DeleteShow(ctx, in, out)
 }
 
-func (h *showHandler) DeleteShowConnectedCinema(ctx context.Context, in *DeleteShowConnectedCinemaRequest, out *DeleteShowConnectedCinemaResponse) error {
-	return h.ShowHandler.DeleteShowConnectedCinema(ctx, in, out)
+func (h *showHandler) DeleteShowCinema(ctx context.Context, in *DeleteShowCinemaRequest, out *DeleteShowCinemaResponse) error {
+	return h.ShowHandler.DeleteShowCinema(ctx, in, out)
 }
 
 func (h *showHandler) DeleteShowConnectedMovie(ctx context.Context, in *DeleteShowConnectedMovieRequest, out *DeleteShowConnectedMovieResponse) error {

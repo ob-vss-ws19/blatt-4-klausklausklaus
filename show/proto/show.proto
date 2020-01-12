@@ -8,7 +8,7 @@ service Show {
     rpc DeleteShow (DeleteShowRequest) returns (DeleteShowResponse) {
     }
 
-    rpc DeleteShowConnectedCinema (DeleteShowConnectedCinemaRequest) returns (DeleteShowConnectedCinemaResponse) {
+    rpc DeleteShowCinema (DeleteShowCinemaRequest) returns (DeleteShowCinemaResponse) {
     }
 
     rpc DeleteShowConnectedMovie (DeleteShowConnectedMovieRequest) returns (DeleteShowConnectedMovieResponse) {
@@ -45,11 +45,11 @@ message DeleteShowResponse {
     bool answer = 1;
 }
 
-message DeleteShowConnectedCinemaRequest {
+message DeleteShowCinemaRequest {
    int32 cinemaId = 1;
 }
 
-message DeleteShowConnectedCinemaResponse {
+message DeleteShowCinemaResponse {
     bool answer = 1;
 }
 

@@ -60,8 +60,8 @@ func TestDeleteShowConnectedMovie(t *testing.T) {
 	err3 := service.CreateShow(context.TODO(), &showtestproto.CreateShowRequest{CreateData: &showtestproto.ShowMessage{CinemaId: 2, MovieId: 2}}, &showtestproto.CreateShowResponse{})
 	responseDeleteMovie := showtestproto.DeleteShowConnectedMovieResponse{}
 	err4 := service.DeleteShowConnectedMovie(context.TODO(), &showtestproto.DeleteShowConnectedMovieRequest{MovieId: 2}, &responseDeleteMovie)
-	responseDeleteCinema := showtestproto.DeleteShowConnectedCinemaResponse{}
-	err5 := service.DeleteShowConnectedCinema(context.TODO(), &showtestproto.DeleteShowConnectedCinemaRequest{CinemaId: 1}, &responseDeleteCinema)
+	responseDeleteCinema := showtestproto.DeleteShowCinemaResponse{}
+	err5 := service.DeleteShowCinema(context.TODO(), &showtestproto.DeleteShowCinemaRequest{CinemaId: 1}, &responseDeleteCinema)
 
 	if err == nil && err1 == nil && err2 == nil && err3 == nil && err4 == nil && err5 == nil {
 		switch {

@@ -223,78 +223,78 @@ func (m *DeleteShowResponse) GetAnswer() bool {
 	return false
 }
 
-type DeleteShowConnectedCinemaRequest struct {
+type DeleteShowCinemaRequest struct {
 	CinemaId             int32    `protobuf:"varint,1,opt,name=cinemaId,proto3" json:"cinemaId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *DeleteShowConnectedCinemaRequest) Reset()         { *m = DeleteShowConnectedCinemaRequest{} }
-func (m *DeleteShowConnectedCinemaRequest) String() string { return proto.CompactTextString(m) }
-func (*DeleteShowConnectedCinemaRequest) ProtoMessage()    {}
-func (*DeleteShowConnectedCinemaRequest) Descriptor() ([]byte, []int) {
+func (m *DeleteShowCinemaRequest) Reset()         { *m = DeleteShowCinemaRequest{} }
+func (m *DeleteShowCinemaRequest) String() string { return proto.CompactTextString(m) }
+func (*DeleteShowCinemaRequest) ProtoMessage()    {}
+func (*DeleteShowCinemaRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_67e145b6e6608d39, []int{5}
 }
 
-func (m *DeleteShowConnectedCinemaRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_DeleteShowConnectedCinemaRequest.Unmarshal(m, b)
+func (m *DeleteShowCinemaRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DeleteShowCinemaRequest.Unmarshal(m, b)
 }
-func (m *DeleteShowConnectedCinemaRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_DeleteShowConnectedCinemaRequest.Marshal(b, m, deterministic)
+func (m *DeleteShowCinemaRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DeleteShowCinemaRequest.Marshal(b, m, deterministic)
 }
-func (m *DeleteShowConnectedCinemaRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteShowConnectedCinemaRequest.Merge(m, src)
+func (m *DeleteShowCinemaRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteShowCinemaRequest.Merge(m, src)
 }
-func (m *DeleteShowConnectedCinemaRequest) XXX_Size() int {
-	return xxx_messageInfo_DeleteShowConnectedCinemaRequest.Size(m)
+func (m *DeleteShowCinemaRequest) XXX_Size() int {
+	return xxx_messageInfo_DeleteShowCinemaRequest.Size(m)
 }
-func (m *DeleteShowConnectedCinemaRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_DeleteShowConnectedCinemaRequest.DiscardUnknown(m)
+func (m *DeleteShowCinemaRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeleteShowCinemaRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_DeleteShowConnectedCinemaRequest proto.InternalMessageInfo
+var xxx_messageInfo_DeleteShowCinemaRequest proto.InternalMessageInfo
 
-func (m *DeleteShowConnectedCinemaRequest) GetCinemaId() int32 {
+func (m *DeleteShowCinemaRequest) GetCinemaId() int32 {
 	if m != nil {
 		return m.CinemaId
 	}
 	return 0
 }
 
-type DeleteShowConnectedCinemaResponse struct {
+type DeleteShowCinemaResponse struct {
 	Answer               bool     `protobuf:"varint,1,opt,name=answer,proto3" json:"answer,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *DeleteShowConnectedCinemaResponse) Reset()         { *m = DeleteShowConnectedCinemaResponse{} }
-func (m *DeleteShowConnectedCinemaResponse) String() string { return proto.CompactTextString(m) }
-func (*DeleteShowConnectedCinemaResponse) ProtoMessage()    {}
-func (*DeleteShowConnectedCinemaResponse) Descriptor() ([]byte, []int) {
+func (m *DeleteShowCinemaResponse) Reset()         { *m = DeleteShowCinemaResponse{} }
+func (m *DeleteShowCinemaResponse) String() string { return proto.CompactTextString(m) }
+func (*DeleteShowCinemaResponse) ProtoMessage()    {}
+func (*DeleteShowCinemaResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_67e145b6e6608d39, []int{6}
 }
 
-func (m *DeleteShowConnectedCinemaResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_DeleteShowConnectedCinemaResponse.Unmarshal(m, b)
+func (m *DeleteShowCinemaResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DeleteShowCinemaResponse.Unmarshal(m, b)
 }
-func (m *DeleteShowConnectedCinemaResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_DeleteShowConnectedCinemaResponse.Marshal(b, m, deterministic)
+func (m *DeleteShowCinemaResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DeleteShowCinemaResponse.Marshal(b, m, deterministic)
 }
-func (m *DeleteShowConnectedCinemaResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteShowConnectedCinemaResponse.Merge(m, src)
+func (m *DeleteShowCinemaResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteShowCinemaResponse.Merge(m, src)
 }
-func (m *DeleteShowConnectedCinemaResponse) XXX_Size() int {
-	return xxx_messageInfo_DeleteShowConnectedCinemaResponse.Size(m)
+func (m *DeleteShowCinemaResponse) XXX_Size() int {
+	return xxx_messageInfo_DeleteShowCinemaResponse.Size(m)
 }
-func (m *DeleteShowConnectedCinemaResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_DeleteShowConnectedCinemaResponse.DiscardUnknown(m)
+func (m *DeleteShowCinemaResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeleteShowCinemaResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_DeleteShowConnectedCinemaResponse proto.InternalMessageInfo
+var xxx_messageInfo_DeleteShowCinemaResponse proto.InternalMessageInfo
 
-func (m *DeleteShowConnectedCinemaResponse) GetAnswer() bool {
+func (m *DeleteShowCinemaResponse) GetAnswer() bool {
 	if m != nil {
 		return m.Answer
 	}
@@ -627,8 +627,8 @@ func init() {
 	proto.RegisterType((*CreateShowResponse)(nil), "showproto.CreateShowResponse")
 	proto.RegisterType((*DeleteShowRequest)(nil), "showproto.DeleteShowRequest")
 	proto.RegisterType((*DeleteShowResponse)(nil), "showproto.DeleteShowResponse")
-	proto.RegisterType((*DeleteShowConnectedCinemaRequest)(nil), "showproto.DeleteShowConnectedCinemaRequest")
-	proto.RegisterType((*DeleteShowConnectedCinemaResponse)(nil), "showproto.DeleteShowConnectedCinemaResponse")
+	proto.RegisterType((*DeleteShowCinemaRequest)(nil), "showproto.DeleteShowCinemaRequest")
+	proto.RegisterType((*DeleteShowCinemaResponse)(nil), "showproto.DeleteShowCinemaResponse")
 	proto.RegisterType((*DeleteShowConnectedMovieRequest)(nil), "showproto.DeleteShowConnectedMovieRequest")
 	proto.RegisterType((*DeleteShowConnectedMovieResponse)(nil), "showproto.DeleteShowConnectedMovieResponse")
 	proto.RegisterType((*ListShowRequest)(nil), "showproto.ListShowRequest")
