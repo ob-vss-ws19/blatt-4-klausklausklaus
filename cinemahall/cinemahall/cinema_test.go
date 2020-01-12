@@ -8,12 +8,15 @@ import (
 	"github.com/ob-vss-ws19/blatt-4-klausklausklaus/cinemahall/cinemahall"
 	cinemaprototest "github.com/ob-vss-ws19/blatt-4-klausklausklaus/cinemahall/proto"
 )
+const (
+	RowValue = 5
+	ColumnValue = 5
+)
 
 func TestDelete(t *testing.T) {
 	TestName := "C1"
 	service := cinemahall.NewCinemaPool()
-	int RowValue = 5
-	int ColumnValue = 5
+	
 	response := cinemaprototest.CreateCinemaResponse{}
 	err := service.Create(context.TODO(), &cinemaprototest.CreateCinemaRequest{Name: TestName, Row: RowValue, Column: ColumnValue}, &response)
 	responseDelete := cinemaprototest.DeleteCinemaResponse{}
@@ -32,8 +35,6 @@ func TestDelete(t *testing.T) {
 
 func TestCreate(t *testing.T) {
 	TestName := "C1"
-	int RowValue = 5
-	int ColumnValue = 5
 	service := cinemahall.NewCinemaPool()
 	response := cinemaprototest.CreateCinemaResponse{}
 	err := service.Create(context.TODO(), &cinemaprototest.CreateCinemaRequest{Name: TestName, Row: RowValue, Column: ColumnValue}, &response)
@@ -55,8 +56,6 @@ func TestReservation(t *testing.T) {
 	TestName := "C1"
 	service := cinemahall.NewCinemaPool()
 	response := cinemaprototest.CreateCinemaResponse{}
-	int RowValue = 5
-	int ColumnValue = 5
 	err := service.Create(context.TODO(), &cinemaprototest.CreateCinemaRequest{Name: TestName, Row: RowValue, Column: RowValue}, &response)
 	responseReservation := cinemaprototest.ReservationResponse{}
 	x := []*cinemaprototest.SeatMessage{}
@@ -77,8 +76,6 @@ func TestReservation(t *testing.T) {
 
 func TestStorno(t *testing.T) {
 	TestName := "C1"
-	int RowValue = 5
-	int ColumnValue = 5
 	service := cinemahall.NewCinemaPool()
 	response := cinemaprototest.CreateCinemaResponse{}
 	err := service.Create(context.TODO(), &cinemaprototest.CreateCinemaRequest{Name: TestName, Row: RowValue, Column: ColumnValue}, &response)
@@ -104,8 +101,6 @@ func TestStorno(t *testing.T) {
 
 func TestCheckSeats(t *testing.T) {
 	TestName := "C1"
-	int RowValue = 5
-	int ColumnValue = 5
 	service := cinemahall.NewCinemaPool()
 	response := cinemaprototest.CreateCinemaResponse{}
 	err := service.Create(context.TODO(), &cinemaprototest.CreateCinemaRequest{Name: TestName, Row: RowValue, Column: ColumnValue}, &response)
@@ -131,8 +126,6 @@ func TestCheckSeats(t *testing.T) {
 
 func TestFreeSeats(t *testing.T) {
 	TestName := "C1"
-	int RowValue = 5
-	int ColumnValue = 5
 	service := cinemahall.NewCinemaPool()
 	response := cinemaprototest.CreateCinemaResponse{}
 	err := service.Create(context.TODO(), &cinemaprototest.CreateCinemaRequest{Name: TestName, Row:RowValue, Column: ColumnValue}, &response)
