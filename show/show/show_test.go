@@ -118,8 +118,8 @@ func TestFindShowCinema(t *testing.T) {
 	err1 := service.CreateShow(context.TODO(), &showtestproto.CreateShowRequest{CreateData: &showtestproto.ShowMessage{CinemaId: 1, MovieId: 2}}, &showtestproto.CreateShowResponse{})
 	err2 := service.CreateShow(context.TODO(), &showtestproto.CreateShowRequest{CreateData: &showtestproto.ShowMessage{CinemaId: 1, MovieId: 3}}, &showtestproto.CreateShowResponse{})
 	err3 := service.CreateShow(context.TODO(), &showtestproto.CreateShowRequest{CreateData: &showtestproto.ShowMessage{CinemaId: 2, MovieId: 2}}, &showtestproto.CreateShowResponse{})
-	responseFindMovie := showtestproto.FindShowCinemaResponse{}
-	err4 := service.FindShowCinema(context.TODO(), &showtestproto.FindShowCinemaRequest{MovieId: 2}, &responseFindMovie)
+	responseFindMovie := showtestproto.FindShowMovieResponse{}
+	err4 := service.FindShowMovie(context.TODO(), &showtestproto.FindShowMovieRequest{MovieId: 2}, &responseFindMovie)
 	responseFindCinema := showtestproto.FindShowCinemaResponse{}
 	err5 := service.FindShowCinema(context.TODO(), &showtestproto.FindShowCinemaRequest{CinemaId: 1}, &responseFindCinema)
 
