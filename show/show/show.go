@@ -200,7 +200,7 @@ func (handler *ShowPool) FindShowCinema(ctx context.Context, request *showproto.
 	return fmt.Errorf("cannot find show with cinemaID: %d", request.CinemaId)
 }
 
-func (handler *ShowPool) FindShowMovie(ctx context.Context, request *showproto.FindShowCinemaRequest, response *showproto.FindShowCinemaResponse) error {
+func (handler *ShowPool) FindShowMovie(ctx context.Context, request *showproto.FindShowMovieRequest, response *showproto.FindShowMovieResponse) error {
 	if request.MovieId > 0 {
 		responseData := []*showproto.ShowMessage{}
 		handler.mutex.Lock()
