@@ -14,6 +14,7 @@ import (
 
 const (
 	maxcinemaid = 432342
+	one = 1
 )
 
 type CinemaDependency struct {
@@ -96,8 +97,8 @@ func (handler *CinemaPool) Create(ctx context.Context, request *cinemaproto.Crea
 	}
 
 	newseatmap := map[*seats]bool{}
-	for i := int32(1); i <= request.Row; i++ {
-		for j := int32(1); j <= request.Column; j++ {
+	for i := int32(one); i <= request.Row; i++ {
+		for j := int32(one); j <= request.Column; j++ {
 			newseatmap[&seats{row: int(i), column: int(j)}] = false
 		}
 	}

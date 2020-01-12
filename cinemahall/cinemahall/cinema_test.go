@@ -11,6 +11,7 @@ import (
 const (
 	RowValue = 5
 	ColumnValue = 5
+	one = 1
 )
 
 func TestDelete(t *testing.T) {
@@ -59,7 +60,9 @@ func TestReservation(t *testing.T) {
 	err := service.Create(context.TODO(), &cinemaprototest.CreateCinemaRequest{Name: TestName, Row: RowValue, Column: RowValue}, &response)
 	responseReservation := cinemaprototest.ReservationResponse{}
 	x := []*cinemaprototest.SeatMessage{}
-	x = append(x, &cinemaprototest.SeatMessage{Row: 1, Column: 1})
+	row := int32(one)
+	col := int32(one)
+	x = append(x, &cinemaprototest.SeatMessage{Row: row, Column: col})
 	err1 := service.Reservation(context.TODO(), &cinemaprototest.ReservationRequest{Id: response.Id, Seatreservation: x}, &responseReservation)
 
 	if err == nil && err1 == nil {
@@ -81,7 +84,9 @@ func TestStorno(t *testing.T) {
 	err := service.Create(context.TODO(), &cinemaprototest.CreateCinemaRequest{Name: TestName, Row: RowValue, Column: ColumnValue}, &response)
 	responseReservation := cinemaprototest.ReservationResponse{}
 	x := []*cinemaprototest.SeatMessage{}
-	x = append(x, &cinemaprototest.SeatMessage{Row: 1, Column: 1})
+	row := int32(one)
+	col := int32(one)
+	x = append(x, &cinemaprototest.SeatMessage{Row: row, Column: col})
 	err1 := service.Reservation(context.TODO(), &cinemaprototest.ReservationRequest{Id: response.Id, Seatreservation: x}, &responseReservation)
 	responseStorno := cinemaprototest.StornoResponse{}
 	err2 := service.Storno(context.TODO(), &cinemaprototest.StornoRequest{Id: response.Id, Seatstorno: x}, &responseStorno)
@@ -106,7 +111,9 @@ func TestCheckSeats(t *testing.T) {
 	err := service.Create(context.TODO(), &cinemaprototest.CreateCinemaRequest{Name: TestName, Row: RowValue, Column: ColumnValue}, &response)
 	responseReservation := cinemaprototest.ReservationResponse{}
 	x := []*cinemaprototest.SeatMessage{}
-	x = append(x, &cinemaprototest.SeatMessage{Row: 1, Column: 1})
+	row := int32(one)
+	col := int32(one)
+	x = append(x, &cinemaprototest.SeatMessage{Row: row, Column: col})
 	err1 := service.Reservation(context.TODO(), &cinemaprototest.ReservationRequest{Id: response.Id, Seatreservation: x}, &responseReservation)
 	responseCheckSeats := cinemaprototest.CheckSeatsResponse{}
 	err2 := service.CheckSeats(context.TODO(), &cinemaprototest.CheckSeatsRequest{Id: response.Id, Seatcheck: x}, &responseCheckSeats)
