@@ -513,22 +513,22 @@ func (*FindShowMovieResponse) Descriptor() ([]byte, []int) {
 func (m *FindShowMovieResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_FindShowMovieResponse.Unmarshal(m, b)
 }
-func (m *FindShowCinemaResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_FindShowCinemaResponse.Marshal(b, m, deterministic)
+func (m *FindShowMovieResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_FindShowMovieResponse.Marshal(b, m, deterministic)
 }
-func (m *FindShowCinemaResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_FindShowCinemaResponse.Merge(m, src)
+func (m *FindShowMovieResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FindShowMovieResponse.Merge(m, src)
 }
-func (m *FindShowCinemaResponse) XXX_Size() int {
-	return xxx_messageInfo_FindShowCinemaResponse.Size(m)
+func (m *FindShowMovieResponse) XXX_Size() int {
+	return xxx_messageInfo_FindShowMovieResponse.Size(m)
 }
-func (m *FindShowCinemaResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_FindShowCinemaResponse.DiscardUnknown(m)
+func (m *FindShowMovieResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_FindShowMovieResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_FindShowCinemaResponse proto.InternalMessageInfo
+var xxx_messageInfo_FindShowMovieResponse proto.InternalMessageInfo
 
-func (m *FindShowCinemaResponse) GetMovieData() []*ShowMessage {
+func (m *FindShowMovieResponse) GetMovieData() []*ShowMessage {
 	if m != nil {
 		return m.MovieData
 	}
