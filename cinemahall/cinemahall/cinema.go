@@ -14,7 +14,7 @@ import (
 
 const (
 	maxcinemaid = 432342
-	one = 1
+	one         = 1
 )
 
 type CinemaDependency struct {
