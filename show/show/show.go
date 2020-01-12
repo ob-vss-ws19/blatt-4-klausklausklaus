@@ -180,9 +180,7 @@ func (handler *ShowPool) ListShow(ctx context.Context, request *showproto.ListSh
 	return nil
 }
 
-/*
-FindShowCinema shows all shows linked to a cinema.
-*/
+
 func (handler *ShowPool) FindShowCinema(ctx context.Context, request *showproto.FindShowCinemaRequest, response *showproto.FindShowCinemaResponse) error {
 	if request.CinemaId > 0 {
 		ids := []int32{}
@@ -202,7 +200,7 @@ func (handler *ShowPool) FindShowCinema(ctx context.Context, request *showproto.
 	return fmt.Errorf("cannot find show with cinemaID: %d", request.CinemaId)
 }
 
-func (handler *ShowPool) FindShowCinema(ctx context.Context, request *showproto.FindShowCinemaRequest, response *showproto.FindShowCinemaResponse) error {
+func (handler *ShowPool) FindShowMovie(ctx context.Context, request *showproto.FindShowCinemaRequest, response *showproto.FindShowCinemaResponse) error {
 	if request.MovieId > 0 {
 		responseData := []*showproto.ShowMessage{}
 		handler.mutex.Lock()

@@ -457,17 +457,17 @@ func (m *ListShowResponse) GetAllShowsData() []*ShowMessage {
 	return nil
 }
 
-type FindShowCinemaRequest struct {
+type FindShowMovie struct {
 	MovieId              int32    `protobuf:"varint,1,opt,name=movieId,proto3" json:"movieId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *FindShowCinemaRequest) Reset()         { *m = FindShowCinemaRequest{} }
-func (m *FindShowCinemaRequest) String() string { return proto.CompactTextString(m) }
-func (*FindShowCinemaRequest) ProtoMessage()    {}
-func (*FindShowCinemaRequest) Descriptor() ([]byte, []int) {
+func (m *FindShowMovieRequest) Reset()         { *m = FindShowMovieRequest{} }
+func (m *FindShowMovieRequest) String() string { return proto.CompactTextString(m) }
+func (*FindShowMovieRequest) ProtoMessage()    {}
+func (*FindShowMovieRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_67e145b6e6608d39, []int{11}
 }
 
