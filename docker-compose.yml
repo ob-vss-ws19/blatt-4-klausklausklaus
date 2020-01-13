@@ -1,0 +1,20 @@
+version: "3"
+services:
+  client:
+    build: client
+    depends_on:
+      - reservation
+      - cinemahall
+      - movies
+      - show
+      - users
+  reservation:
+    build: reservation
+  cinemahall:
+    build: cinemahall
+  movies:
+    build: movies
+  show:
+    build: show
+  users:
+    build: users
